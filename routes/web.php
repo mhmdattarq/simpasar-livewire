@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\PasarController;
 use App\Livewire\Admin\DashboardIndex as AdminDashboard;
+use App\Livewire\Admin\Pasar\PasarCreate;
+use App\Livewire\Admin\Pasar\PasarData;
 use App\Livewire\Auth\Login;
 use App\Livewire\Pedagang\DashboardIndex as PedagangDashboard;
 use App\Models\User;
@@ -19,6 +22,11 @@ Route::middleware('auth')->group(function () {
     // Group Khusus Role ADMIN
     Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
         Route::livewire('/dashboard', AdminDashboard::class)->name('dashboard');
+        Route::prefix('pasar')->name('pasar.')->group(function () {
+            Route::get('/datatable', [PasarController::class, 'index'])->name('dt');
+            Route::livewire('/data', PasarData::class)->name('data');
+            Route::livewire('/create', PasarCreate::class)->name('create');
+        });
     });
 
     // Group Khusus Role PEDAGANG

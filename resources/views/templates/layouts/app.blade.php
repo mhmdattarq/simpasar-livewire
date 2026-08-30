@@ -8,12 +8,10 @@
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('admin/assets/images/favicon.ico') }}">
-
+    @stack('css')
     <link rel="stylesheet" href="{{ asset('admin/assets/libs/jsvectormap/css/jsvectormap.min.css') }}">
-
     <!-- App css -->
     <link href="{{ asset('admin/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
@@ -57,7 +55,7 @@
     <!-- end page-wrapper -->
     <script src="{{ asset('admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('admin/assets/libs/simplebar/simplebar.min.js') }}"></script>
-
+    @stack('js')
     <script src="{{ asset('admin/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
     <script src="{{ asset('admin/assets/data/stock-prices.js') }}"></script>
     <script src="{{ asset('admin/assets/libs/jsvectormap/js/jsvectormap.min.js') }}"></script>

@@ -27,7 +27,7 @@ new class extends Component {
                     <!-- Navigation -->
                     <ul class="navbar-nav mb-auto w-100">
 
-                        {{-- ================= MENU ROLE ADMIN ================= --}}
+                        {{-- MENU ROLE ADMIN --}}
                         @if (auth()->user()?->isAdmin())
                             <li class="menu-label pt-0 mt-0">
                                 <span>Menu Administrator</span>
@@ -43,7 +43,7 @@ new class extends Component {
                                 <span>Master Data Pasar</span>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link {{ request()->routeIs('admin.pasar.*') ? 'active' : '' }}" href="{{ route('admin.pasar.data') }}">
                                     <i class="iconoir-shop menu-icon"></i>
                                     <span>Data Pasar</span>
                                 </a>
@@ -77,7 +77,7 @@ new class extends Component {
                             </li>
                         @endif
 
-                        {{-- ================= MENU ROLE PEDAGANG ================= --}}
+                        {{-- MENU ROLE PEDAGANG --}}
                         @if (auth()->user()?->isPedagang())
                             <li class="menu-label pt-0 mt-0">
                                 <span>Menu Pedagang</span>
@@ -105,7 +105,6 @@ new class extends Component {
                                 </a>
                             </li>
                         @endif
-
                     </ul>
                 </div>
             </div>
