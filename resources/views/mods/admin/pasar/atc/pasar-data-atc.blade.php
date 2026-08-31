@@ -15,6 +15,10 @@
             vertical-align: middle;
         }
 
+        .table-responsive {
+            min-height: 260px;
+        }
+
         .dropdown-menu {
             z-index: 1060 !important;
         }
@@ -66,16 +70,16 @@
 
                                 return `
                                     <div class="dropdown">
-                                        <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
                                             <i class="iconoir-more-horiz"></i>
                                         </button>
-                                        <div class="dropdown-menu">
+                                        <div class="dropdown-menu shadow">
                                             <a class="dropdown-item" href="${editUrl}">
                                                 <i class="iconoir-edit-pencil me-2 text-warning"></i> Edit
                                             </a>
-                                            <a class="dropdown-item text-danger" href="javascript:void(0);" onclick="deleteConfirm(${row.id}, '${row.nama_pasar}')">
+                                            <button type="button" class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
                                                 <i class="iconoir-trash me-2"></i> Hapus
-                                            </a>
+                                            </button>
                                         </div>
                                     </div>
                                 `;
@@ -124,13 +128,6 @@
                             className: 'text-center'
                         },
                     ],
-                    drawCallback: function() {
-                        if (typeof bootstrap !== 'undefined' && bootstrap.Dropdown) {
-                            document.querySelectorAll('#myTable [data-bs-toggle="dropdown"]').forEach(function(el) {
-                                bootstrap.Dropdown.getOrCreateInstance(el);
-                            });
-                        }
-                    },
                     initComplete: function(settings) {
                         var table = settings.oInstance.api();
                         // Filter kolom thead

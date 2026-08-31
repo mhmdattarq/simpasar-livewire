@@ -26,7 +26,7 @@
                             <h4 class="card-title">Manajemen Data Pasar</h4>
                         </div>
                         <div class="col-auto ms-auto">
-                            <a href="{{ route('admin.pasar.create') }}" class="btn btn-primary">
+                            <a href="{{ route('admin.pasar.create') }}" class="btn btn-primary" wire:navigate>
                                 <i class="iconoir-plus-circle me-1"></i> Tambah Data Pasar
                             </a>
                         </div>
@@ -55,11 +55,13 @@
                                     <th class="text-center"></th>
                                     <th class="text-center"></th>
                                     <th class="text-center">
-                                        <input type="text" class="form-control form-control-sm text-center search-col-dt"
+                                        <input type="text"
+                                            class="form-control form-control-sm text-center search-col-dt"
                                             placeholder="Cari Nama">
                                     </th>
                                     <th class="text-center">
-                                        <input type="text" class="form-control form-control-sm text-center search-col-dt"
+                                        <input type="text"
+                                            class="form-control form-control-sm text-center search-col-dt"
                                             placeholder="Cari Alamat">
                                     </th>
                                     <th class="text-center"></th>
@@ -74,7 +76,7 @@
             </div>
         </div>
     </div>
-
+    <livewire:modal-delete />
     {{-- ini ngehook ke dalam atc agar kebaca script datatables nya --}}
     @include('mods.admin.pasar.atc.pasar-data-atc')
 </div>

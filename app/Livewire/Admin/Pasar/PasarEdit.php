@@ -84,7 +84,7 @@ class PasarEdit extends Component
                 'message' => 'Data Pasar Berhasil diperbarui',
             ]);
 
-            return $this->redirectRoute('admin.pasar.data', navigate: true);
+            return $this->redirectRoute('admin.pasar.data');
         } else {
             $this->dispatch('alert-show', data: [
                 'type' => 'error',

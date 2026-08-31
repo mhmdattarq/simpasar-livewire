@@ -1,5 +1,4 @@
 <div>
-    <livewire:toast />
     <div class="row mb-2">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
