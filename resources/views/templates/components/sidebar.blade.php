@@ -34,7 +34,7 @@ new class extends Component {
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
-                                    href="{{ route('admin.dashboard') }}">
+                                    href="{{ route('admin.dashboard') }}" wire:navigate>
                                     <i class="iconoir-home-simple menu-icon"></i>
                                     <span>Dashboard</span>
                                 </a>
@@ -43,7 +43,8 @@ new class extends Component {
                                 <span>Master Data Pasar</span>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('admin.pasar.*') ? 'active' : '' }}" href="{{ route('admin.pasar.data') }}">
+                                <a class="nav-link {{ request()->routeIs('admin.pasar.*') ? 'active' : '' }}"
+                                    href="{{ route('admin.pasar.data') }}" wire:navigate>
                                     <i class="iconoir-shop menu-icon"></i>
                                     <span>Data Pasar</span>
                                 </a>

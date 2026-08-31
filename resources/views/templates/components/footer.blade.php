@@ -14,11 +14,7 @@ new class extends Component {
                 <div class="card mb-0 rounded-bottom-0">
                     <div class="card-body">
                         <p class="text-muted mb-0">
-                            ©
-                            <script>
-                                document.write(new Date().getFullYear())
-                            </script>
-                            Rizz
+                            © {{ date('Y') }} SIM Pasar
                             <span class="text-muted d-none d-sm-inline-block float-end">
                                 Crafted with
                                 <i class="iconoir-heart text-danger"></i>

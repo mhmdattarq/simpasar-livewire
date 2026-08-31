@@ -1,4 +1,5 @@
 <div>
+    <!-- start page title -->
     <div class="row mb-2">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
@@ -14,33 +15,66 @@
             </div>
         </div>
     </div>
-    <div class="card">
-        <div class="card-header">
-            <div class="row align-items-center">
-                <div class="col-auto">
-                    <h4 class="card-title">Data Pasar</h4>
-                </div><!--end col-->
-                <div class="col-auto ms-auto">
-                    <a href="{{ route('admin.pasar.create') }}" class="btn btn-primary">Tambah Data Pasar</a>
-                </div><!--end col-->
-            </div> <!--end row-->
-        </div><!--end card-header-->
-        <div class="card-body pt-0">
-            <div class="table-responsive">
-                <table class="table datatable" id="datatable_1">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Nama Pasar</th>
-                            <th>Alamat</th>
-                            <th>Total Kios</th>
-                            <th>Total Los</th>
-                            <th>Total Pelataran</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+    <!-- end page title -->
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <h4 class="card-title">Manajemen Data Pasar</h4>
+                        </div>
+                        <div class="col-auto ms-auto">
+                            <a href="{{ route('admin.pasar.create') }}" class="btn btn-primary">
+                                <i class="iconoir-plus-circle me-1"></i> Tambah Data Pasar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" wire:ignore>
+                    <div class="table-responsive">
+                        <table id="myTable" class="table table-bordered table-striped w-100 align-middle">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px" class="text-center">Check</th>
+                                    <th style="width: 50px" class="text-center">Aksi</th>
+                                    <th style="width: 40px" class="text-center">No</th>
+                                    <th>Nama Pasar</th>
+                                    <th>Alamat</th>
+                                    <th class="text-center" style="width: 100px">Total Kios</th>
+                                    <th class="text-center" style="width: 100px">Total Los</th>
+                                    <th class="text-center" style="width: 120px">Total Pelataran</th>
+                                </tr>
+                            </thead>
+                            <thead id="header-filter">
+                                <tr>
+                                    <th class="text-center">
+                                        <input type="checkbox" class="form-check-input check-data-all">
+                                    </th>
+                                    <th class="text-center"></th>
+                                    <th class="text-center"></th>
+                                    <th class="text-center">
+                                        <input type="text" class="form-control form-control-sm text-center search-col-dt"
+                                            placeholder="Cari Nama">
+                                    </th>
+                                    <th class="text-center">
+                                        <input type="text" class="form-control form-control-sm text-center search-col-dt"
+                                            placeholder="Cari Alamat">
+                                    </th>
+                                    <th class="text-center"></th>
+                                    <th class="text-center"></th>
+                                    <th class="text-center"></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div><!--end card-body-->
-    </div><!--end card-->
+        </div>
+    </div>
+
+    {{-- ini ngehook ke dalam atc agar kebaca script datatables nya --}}
     @include('mods.admin.pasar.atc.pasar-data-atc')
 </div>
