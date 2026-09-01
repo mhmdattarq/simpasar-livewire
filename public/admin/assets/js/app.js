@@ -86,6 +86,19 @@ $(document).on('click', function(e) {
     }
 });
 
+// Automatically close dropdown when any item inside is clicked or modal opens
+$(document).on('click', '.dropdown-menu a, .dropdown-menu button', function() {
+    if (!$(this).closest('.dropdown-menu.stop').length) {
+        $('.dropdown-menu.show').removeClass('show');
+        $('[data-bs-toggle="dropdown"], .dropdown-toggle').attr('aria-expanded', 'false');
+    }
+});
+
+$(document).on('show.bs.modal', function() {
+    $('.dropdown-menu.show').removeClass('show');
+    $('[data-bs-toggle="dropdown"], .dropdown-toggle').attr('aria-expanded', 'false');
+});
+
 // Close all open dropdowns before leaving page in SPA
 document.addEventListener("livewire:navigating", () => {
     $('.dropdown-menu.show').removeClass('show');
