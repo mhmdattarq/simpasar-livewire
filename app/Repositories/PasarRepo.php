@@ -34,6 +34,20 @@ class PasarRepo
         }
     }
 
+    public static function delete($id)
+    {
+        try {
+            $pasar = DataPasar::findOrFail($id);
+            $pasar->delete();
+
+            return true;
+        } catch (\Exception $e) {
+            Log::error('Delete data tabel data_pasars gagal', ['error' => $e->getMessage()]);
+
+            return false;
+        }
+    }
+
     public static function getById($id)
     {
         return DataPasar::findOrFail($id);

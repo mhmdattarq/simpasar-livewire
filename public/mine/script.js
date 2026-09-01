@@ -57,15 +57,42 @@ $(".modal").on("show.bs.modal", function (e) {
 });
 
 window.addEventListener('closeModal', param => {
-    $('#' + param.detail.id).modal('hide');
+    const id = param.detail?.id ?? (Array.isArray(param.detail) ? param.detail[0]?.id : param.detail);
+    if (id) {
+        const el = document.getElementById(id);
+        if (el && typeof bootstrap !== 'undefined') {
+            const modal = bootstrap.Modal.getInstance(el) || bootstrap.Modal.getOrCreateInstance(el);
+            modal.hide();
+        }
+        $('#' + id).modal('hide');
+    }
 });
 
 window.addEventListener('showModal', param => {
-    $('#' + param.detail.id).modal('show');
+    const id = param.detail?.id ?? (Array.isArray(param.detail) ? param.detail[0]?.id : param.detail);
+    if (id) {
+        const el = document.getElementById(id);
+        if (el && typeof bootstrap !== 'undefined') {
+            const modal = bootstrap.Modal.getOrCreateInstance(el);
+            modal.show();
+        }
+        $('#' + id).modal('show');
+    }
 });
 
 window.addEventListener('reloadDT', param => {
-    eval(param.detail.data).ajax.reload();
+    const dtName = param.detail?.data ?? (Array.isArray(param.detail) ? param.detail[0]?.data : param.detail);
+    try {
+        if (window[dtName]) {
+            window[dtName].ajax.reload(null, false);
+        } else {
+            eval(dtName).ajax.reload(null, false);
+        }
+    } catch(e) {
+        if ($.fn.DataTable && $.fn.DataTable.isDataTable('#myTable')) {
+            $('#myTable').DataTable().ajax.reload(null, false);
+        }
+    }
 });
 
 function initSearchCol(table, headerId, inputClass) {

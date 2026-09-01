@@ -36,7 +36,7 @@
             }
 
             if ($.fn.DataTable) {
-                var dtTable = $('#myTable').DataTable({
+                window.dtTable = $('#myTable').DataTable({
                     processing: true,
                     serverSide: true,
                     responsive: false,
@@ -77,9 +77,9 @@
                                             <a class="dropdown-item" href="${editUrl}">
                                                 <i class="iconoir-edit-pencil me-2 text-warning"></i> Edit
                                             </a>
-                                            <button type="button" class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+                                            <a class="dropdown-item text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#modalDelete" wire:click="hookModalDelete(${data.id},'${data.nama_pasar}')">
                                                 <i class="iconoir-trash me-2"></i> Hapus
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
                                 `;
@@ -128,6 +128,13 @@
                             className: 'text-center'
                         },
                     ],
+                    drawCallback: function() {
+                        if (typeof bootstrap !== 'undefined' && bootstrap.Dropdown) {
+                            document.querySelectorAll('#myTable [data-bs-toggle="dropdown"]').forEach(function(el) {
+                                bootstrap.Dropdown.getOrCreateInstance(el);
+                            });
+                        }
+                    },
                     initComplete: function(settings) {
                         var table = settings.oInstance.api();
                         // Filter kolom thead
@@ -154,14 +161,5 @@
         }
 
         document.addEventListener('livewire:navigated', initPasarTable);
-
-        function deleteConfirm(id, nama) {
-            if (confirm('Apakah Anda yakin ingin menghapus pasar "' + nama + '"?')) {
-                Livewire.dispatch('PasarData-deleteConfirm', {
-                    id: id,
-                    nama: nama
-                });
-            }
-        }
     </script>
 @endpush
