@@ -12,9 +12,11 @@ new class extends Component {
         <!--start brand-->
         <div class="brand">
             <a href="{{ auth()->user()?->isAdmin() ? route('admin.dashboard') : route('pedagang.dashboard') }}"
-                class="logo" wire:navigate>
+                class="logo d-flex align-items-center justify-content-center" wire:navigate>
+                <img src="{{ asset('admin/assets/images/logo_kota_dumai.webp') }}" alt="Logo Kota Dumai"
+                    style="height: 32px !important; width: auto !important; max-height: 32px !important; object-fit: contain;" class="me-2">
                 <span class="fw-bold fs-18 text-primary">
-                    <i class="iconoir-shop me-1"></i> SIM PASAR
+                    SIM PASAR
                 </span>
             </a>
         </div>

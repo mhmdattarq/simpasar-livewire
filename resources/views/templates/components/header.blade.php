@@ -19,7 +19,7 @@ new class extends Component {
                         </button>
                     </li>
                     <li class="mx-3 welcome-text">
-                        <h4 class="mb-0 fw-bold text-truncate">Halo, {{ auth()->user()?->name ?? 'User' }}! 👋</h4>
+                        <h4 class="mb-0 fw-bold text-truncate">ADMIN CENTER - SIM PASAR</h4>
                     </li>
                 </ul>
                 <ul class="topbar-item list-unstyled d-inline-flex align-items-center mb-0">
