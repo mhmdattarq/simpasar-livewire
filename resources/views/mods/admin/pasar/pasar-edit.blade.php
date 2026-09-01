@@ -22,7 +22,7 @@
                     <h4 class="card-title">Edit Data Pasar</h4>
                 </div><!--end col-->
                 <div class="col-auto ms-auto">
-                    <a href="{{ route('admin.pasar.data') }}" class="btn btn-danger">Kembali</a>
+                    <a href="{{ route('admin.pasar.data') }}" class="btn btn-danger" wire:navigate>Kembali</a>
                 </div><!--end col-->
             </div> <!--end row-->
         </div><!--end card-header-->

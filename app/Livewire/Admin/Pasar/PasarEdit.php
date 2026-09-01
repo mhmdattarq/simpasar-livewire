@@ -7,7 +7,6 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-#[Title('Edit Data Pasar - SIM Pasar')]
 class PasarEdit extends Component
 {
     use WithFileUploads;
@@ -84,7 +83,7 @@ class PasarEdit extends Component
                 'message' => 'Data Pasar Berhasil diperbarui',
             ]);
 
-            return $this->redirectRoute('admin.pasar.data');
+            return $this->redirectRoute('admin.pasar.data', navigate: true);
         } else {
             $this->dispatch('alert-show', data: [
                 'type' => 'error',

@@ -12,7 +12,7 @@ new class extends Component {
         <!--start brand-->
         <div class="brand">
             <a href="{{ auth()->user()?->isAdmin() ? route('admin.dashboard') : route('pedagang.dashboard') }}"
-                class="logo">
+                class="logo" wire:navigate>
                 <span class="fw-bold fs-18 text-primary">
                     <i class="iconoir-shop me-1"></i> SIM PASAR
                 </span>
@@ -34,7 +34,7 @@ new class extends Component {
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
-                                    href="{{ route('admin.dashboard') }}">
+                                    href="{{ route('admin.dashboard') }}" wire:navigate>
                                     <i class="iconoir-home-simple menu-icon"></i>
                                     <span>Dashboard</span>
                                 </a>
@@ -44,7 +44,7 @@ new class extends Component {
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('admin.pasar.*') ? 'active' : '' }}"
-                                    href="{{ route('admin.pasar.data') }}">
+                                    href="{{ route('admin.pasar.data') }}" wire:navigate>
                                     <i class="iconoir-shop menu-icon"></i>
                                     <span>Data Pasar</span>
                                 </a>
@@ -85,7 +85,7 @@ new class extends Component {
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('pedagang.dashboard') ? 'active' : '' }}"
-                                    href="{{ route('pedagang.dashboard') }}">
+                                    href="{{ route('pedagang.dashboard') }}" wire:navigate>
                                     <i class="iconoir-home-simple menu-icon"></i>
                                     <span>Dashboard Pedagang</span>
                                 </a>

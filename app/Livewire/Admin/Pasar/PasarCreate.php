@@ -7,7 +7,6 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-#[Title('Tambah Data Pasar - SIM Pasar')]
 class PasarCreate extends Component
 {
     use WithFileUploads;

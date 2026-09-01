@@ -1,118 +1,99 @@
 /**
- * Theme JS Configuration (Customized for SIM Pasar)
+ * Theme JS Configuration (Customized & Optimized for SIM Pasar SPA)
  */
-try {
-    var dropdownMenus = document.querySelectorAll(".dropdown-menu.stop");
-    dropdownMenus.forEach(function(e) {
-        e.addEventListener("click", function(e) {
-            e.stopPropagation();
-        });
+
+const initAppFeatures = () => {
+    // 1. Dropdown stop propagation
+    document.querySelectorAll(".dropdown-menu.stop").forEach(function(e) {
+        e.onclick = function(ev) {
+            ev.stopPropagation();
+        };
     });
-} catch(e) {}
 
-try {
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
-} catch(e) {}
-
-// Light / Dark Mode Toggle
-try {
-    var themeColorToggle = document.getElementById("light-dark-mode");
-    if (themeColorToggle) {
-        themeColorToggle.addEventListener("click", function(e) {
-            if ("light" === document.documentElement.getAttribute("data-bs-theme")) {
-                document.documentElement.setAttribute("data-bs-theme", "dark");
-            } else {
-                document.documentElement.setAttribute("data-bs-theme", "light");
-            }
-        });
-    }
-} catch(e) {}
-
-// Sidebar Toggle (Auto-close feature disabled)
-try {
-    var collapsedToggle = document.querySelector(".mobile-menu-btn");
+    // 2. Mobile Menu / Sidebar Toggle
+    const collapsedToggle = document.querySelector(".mobile-menu-btn");
     const overlay = document.querySelector(".startbar-overlay");
 
     if (collapsedToggle) {
-        collapsedToggle.addEventListener("click", function() {
+        collapsedToggle.onclick = function() {
             if (document.body.getAttribute("data-sidebar-size") === "collapsed") {
                 document.body.setAttribute("data-sidebar-size", "default");
             } else {
                 document.body.setAttribute("data-sidebar-size", "collapsed");
             }
-        });
+        };
     }
 
     if (overlay) {
-        overlay.addEventListener("click", function() {
+        overlay.onclick = function() {
             if (window.innerWidth < 768) {
                 document.body.setAttribute("data-sidebar-size", "collapsed");
             }
-        });
+        };
     }
 
-    // Default sidebar size is default (open), only collapse on small mobile (< 768px)
-    const checkSidebarSize = () => {
-        if (window.innerWidth < 768) {
-            document.body.setAttribute("data-sidebar-size", "collapsed");
-        } else {
-            document.body.setAttribute("data-sidebar-size", "default");
+    // 3. Light / Dark Mode Toggle
+    const themeColorToggle = document.getElementById("light-dark-mode");
+    if (themeColorToggle) {
+        themeColorToggle.onclick = function() {
+            if ("light" === document.documentElement.getAttribute("data-bs-theme")) {
+                document.documentElement.setAttribute("data-bs-theme", "dark");
+            } else {
+                document.documentElement.setAttribute("data-bs-theme", "light");
+            }
+        };
+    }
+
+    // 4. Lucide icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+
+    // 5. Tooltips & Popovers
+    if (typeof bootstrap !== 'undefined') {
+        if (bootstrap.Tooltip) {
+            document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(e => {
+                bootstrap.Tooltip.getOrCreateInstance(e);
+            });
         }
-    };
-
-    window.addEventListener("resize", checkSidebarSize);
-    checkSidebarSize();
-} catch(e) {}
-
-// Tooltips & Popovers
-try {
-    const tooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-    [...tooltips].map(e => new bootstrap.Tooltip(e));
-
-    const popovers = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-    popovers.map(function(e) {
-        return new bootstrap.Popover(e);
-    });
-} catch(e) {}
-
-// Navbar Sticky on Scroll
-function windowScroll() {
-    var e = document.getElementById("topbar-custom");
-    if (e != null) {
-        if (document.body.scrollTop >= 50 || document.documentElement.scrollTop >= 50) {
-            e.classList.add("nav-sticky");
-        } else {
-            e.classList.remove("nav-sticky");
+        if (bootstrap.Popover) {
+            document.querySelectorAll('[data-bs-toggle="popover"]').forEach(e => {
+                bootstrap.Popover.getOrCreateInstance(e);
+            });
         }
     }
-}
-window.addEventListener("scroll", function(e) {
-    windowScroll();
+};
+
+// Delegated Table Action Dropdown (Global & Persistent across all SPA pages)
+$(document).on('click', '.table .dropdown-toggle', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var $menu = $(this).closest('.dropdown, .btn-group').find('.dropdown-menu');
+    var isShown = $menu.hasClass('show');
+    $('.table .dropdown-menu.show').removeClass('show');
+    $('.table .dropdown-toggle').attr('aria-expanded', 'false');
+    if (!isShown) {
+        $menu.addClass('show');
+        $(this).attr('aria-expanded', 'true');
+    }
 });
 
-// Vertical Menu Activation
+// Close table dropdowns when clicking outside
+$(document).on('click', function(e) {
+    if (!$(e.target).closest('.table .dropdown, .table .btn-group').length) {
+        $('.table .dropdown-menu.show').removeClass('show');
+        $('.table .dropdown-toggle').attr('aria-expanded', 'false');
+    }
+});
+
+// Close all open dropdowns before leaving page in SPA
+document.addEventListener("livewire:navigating", () => {
+    $('.dropdown-menu.show').removeClass('show');
+    $('.dropdown-toggle').attr('aria-expanded', 'false');
+});
+
+// Vertical Menu Active State & Collapse Handling
 const initVerticalMenu = () => {
-    var collapseItems = document.querySelectorAll(".navbar-nav li .collapse");
-    
-    document.querySelectorAll(".navbar-nav li [data-bs-toggle='collapse']").forEach(function(e) {
-        e.addEventListener("click", function(ev) {
-            ev.preventDefault();
-        });
-    });
-
-    collapseItems.forEach(function(item) {
-        item.addEventListener("show.bs.collapse", function(t) {
-            const openParent = t.target.closest(".collapse.show");
-            document.querySelectorAll(".navbar-nav .collapse.show").forEach(function(e) {
-                if (e !== t.target && e !== openParent) {
-                    new bootstrap.Collapse(e).hide();
-                }
-            });
-        });
-    });
-
     if (document.querySelector(".navbar-nav")) {
         document.querySelectorAll(".navbar-nav a").forEach(function(t) {
             var currentUrl = window.location.href.split(/[?#]/)[0];
@@ -133,5 +114,26 @@ const initVerticalMenu = () => {
     }
 };
 
-document.addEventListener("DOMContentLoaded", initVerticalMenu);
-document.addEventListener("livewire:navigated", initVerticalMenu);
+// Navbar Sticky on Scroll
+function windowScroll() {
+    var e = document.getElementById("topbar-custom");
+    if (e != null) {
+        if (document.body.scrollTop >= 50 || document.documentElement.scrollTop >= 50) {
+            e.classList.add("nav-sticky");
+        } else {
+            e.classList.remove("nav-sticky");
+        }
+    }
+}
+window.addEventListener("scroll", windowScroll);
+
+// Initialize on first load & on every Livewire SPA navigation
+document.addEventListener("DOMContentLoaded", () => {
+    initAppFeatures();
+    initVerticalMenu();
+});
+
+document.addEventListener("livewire:navigated", () => {
+    initAppFeatures();
+    initVerticalMenu();
+});

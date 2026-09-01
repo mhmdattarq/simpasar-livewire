@@ -12,7 +12,6 @@ new class extends Component {
         <div class="container-xxl">
             <nav class="topbar-custom d-flex justify-content-between" id="topbar-custom">
 
-
                 <ul class="topbar-item list-unstyled d-inline-flex align-items-center mb-0">
                     <li>
                         <button class="nav-link mobile-menu-btn nav-icon" id="togglemenu">
@@ -24,13 +23,16 @@ new class extends Component {
                     </li>
                 </ul>
                 <ul class="topbar-item list-unstyled d-inline-flex align-items-center mb-0">
-                    <li class="dropdown topbar-item">
-                        <a class="nav-link dropdown-toggle arrow-none nav-icon" data-bs-toggle="dropdown" href="#"
-                            role="button" aria-haspopup="false" aria-expanded="false">
+                    {{-- NOTIFIKASI DROPDOWN --}}
+                    <li class="dropdown topbar-item position-relative" x-data="{ openNotification: false }" @click.outside="openNotification = false">
+                        <a class="nav-link dropdown-toggle arrow-none nav-icon" href="javascript:void(0)" @click="openNotification = !openNotification"
+                            role="button" aria-haspopup="false">
                             <i class="icofont-bell-alt"></i>
                             <span class="alert-badge"></span>
                         </a>
-                        <div class="dropdown-menu stop dropdown-menu-end dropdown-lg py-0">
+                        <div class="dropdown-menu stop dropdown-menu-end dropdown-lg py-0 shadow border-0" 
+                            :class="{ 'show': openNotification }"
+                            style="position: absolute; right: 0; left: auto; top: 100%; z-index: 1060;">
 
                             <h5 class="dropdown-item-text m-0 py-3 d-flex justify-content-between align-items-center">
                                 Notifications <a href="#" class="badge text-body-tertiary badge-pill">
@@ -221,7 +223,6 @@ new class extends Component {
                                         </a><!--end-item-->
                                     </div>
                                 </div>
-
                             </div>
                             <!-- All-->
                             <a href="pages-notifications.html" class="dropdown-item text-center text-dark fs-13 py-2">
@@ -229,13 +230,18 @@ new class extends Component {
                             </a>
                         </div>
                     </li>
-                    <li class="dropdown topbar-item">
-                        <a class="nav-link dropdown-toggle arrow-none nav-icon" data-bs-toggle="dropdown"
-                            href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                            <img src="assets/images/users/avatar-1.jpg" alt=""
-                                class="thumb-lg rounded-circle">
+
+                    {{-- USER PROFILE DROPDOWN --}}
+                    <li class="dropdown topbar-item position-relative" x-data="{ openProfile: false }" @click.outside="openProfile = false">
+                        <a class="nav-link dropdown-toggle arrow-none nav-icon p-1" href="javascript:void(0)" @click="openProfile = !openProfile"
+                            role="button" aria-haspopup="false">
+                            <div class="thumb-md rounded-circle bg-success text-white d-flex align-items-center justify-content-center fw-bold fs-14">
+                                {{ strtoupper(substr(auth()->user()?->name ?? 'A', 0, 1)) }}
+                            </div>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-end py-0">
+                        <div class="dropdown-menu dropdown-menu-end py-0 shadow border-0" 
+                            :class="{ 'show': openProfile }"
+                            style="position: absolute; right: 0; left: auto; top: 100%; min-width: 220px; z-index: 1060;">
                             <div class="d-flex align-items-center dropdown-item py-2 bg-secondary-subtle">
                                 <div class="flex-shrink-0">
                                     <div
