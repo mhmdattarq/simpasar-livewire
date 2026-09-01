@@ -24,15 +24,16 @@ new class extends Component {
                 </ul>
                 <ul class="topbar-item list-unstyled d-inline-flex align-items-center mb-0">
                     {{-- NOTIFIKASI DROPDOWN --}}
-                    <li class="dropdown topbar-item position-relative" x-data="{ openNotification: false }" @click.outside="openNotification = false">
-                        <a class="nav-link dropdown-toggle arrow-none nav-icon" href="javascript:void(0)" @click="openNotification = !openNotification"
-                            role="button" aria-haspopup="false">
+                    <li class="dropdown topbar-item position-relative" x-data="{ openNotification: false }"
+                        @click.outside="openNotification = false">
+                        <a class="nav-link dropdown-toggle arrow-none nav-icon" href="javascript:void(0)"
+                            @click="openNotification = !openNotification" role="button" aria-haspopup="false">
                             <i class="icofont-bell-alt"></i>
                             <span class="alert-badge"></span>
                         </a>
-                        <div class="dropdown-menu stop dropdown-menu-end dropdown-lg py-0 shadow border-0" 
+                        <div class="dropdown-menu stop dropdown-menu-end dropdown-lg py-0 shadow border-0"
                             :class="{ 'show': openNotification }"
-                            style="position: absolute; right: 0; left: auto; top: 100%; z-index: 1060;">
+                            style="position: absolute; right: 8px; left: auto; top: 86px; z-index: 1060;">
 
                             <h5 class="dropdown-item-text m-0 py-3 d-flex justify-content-between align-items-center">
                                 Notifications <a href="#" class="badge text-body-tertiary badge-pill">
@@ -232,16 +233,18 @@ new class extends Component {
                     </li>
 
                     {{-- USER PROFILE DROPDOWN --}}
-                    <li class="dropdown topbar-item position-relative" x-data="{ openProfile: false }" @click.outside="openProfile = false">
-                        <a class="nav-link dropdown-toggle arrow-none nav-icon p-1" href="javascript:void(0)" @click="openProfile = !openProfile"
-                            role="button" aria-haspopup="false">
-                            <div class="thumb-md rounded-circle bg-success text-white d-flex align-items-center justify-content-center fw-bold fs-14">
+                    <li class="dropdown topbar-item position-relative" x-data="{ openProfile: false }"
+                        @click.outside="openProfile = false">
+                        <a class="nav-link dropdown-toggle arrow-none nav-icon p-1" href="javascript:void(0)"
+                            @click="openProfile = !openProfile" role="button" aria-haspopup="false">
+                            <div
+                                class="thumb-md rounded-circle bg-success text-white d-flex align-items-center justify-content-center fw-bold fs-14">
                                 {{ strtoupper(substr(auth()->user()?->name ?? 'A', 0, 1)) }}
                             </div>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-end py-0 shadow border-0" 
+                        <div class="dropdown-menu dropdown-menu-end py-0 shadow border-0"
                             :class="{ 'show': openProfile }"
-                            style="position: absolute; right: 0; left: auto; top: 100%; min-width: 220px; z-index: 1060;">
+                            style="position: absolute; right: 8px; left: auto; top: 86px; min-width: 220px; z-index: 1060;">
                             <div class="d-flex align-items-center dropdown-item py-2 bg-secondary-subtle">
                                 <div class="flex-shrink-0">
                                     <div
