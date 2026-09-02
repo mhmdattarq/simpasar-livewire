@@ -14,7 +14,8 @@ new class extends Component {
             <a href="{{ auth()->user()?->isAdmin() ? route('admin.dashboard') : route('pedagang.dashboard') }}"
                 class="logo d-flex align-items-center justify-content-center" wire:navigate>
                 <img src="{{ asset('admin/assets/images/logo_kota_dumai.webp') }}" alt="Logo Kota Dumai"
-                    style="height: 32px !important; width: auto !important; max-height: 32px !important; object-fit: contain;" class="me-2">
+                    style="height: 32px !important; width: auto !important; max-height: 32px !important; object-fit: contain;"
+                    class="me-2">
                 <span class="fw-bold fs-18 text-primary">
                     SIM PASAR
                 </span>
@@ -52,7 +53,8 @@ new class extends Component {
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link {{ request()->routeIs('admin.kios.*') ? 'active' : '' }}"
+                                    href="{{ route('admin.kios.data') }}" wire:navigate>
                                     <i class="iconoir-box-iso menu-icon"></i>
                                     <span>Data Kios</span>
                                 </a>
