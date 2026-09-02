@@ -5,13 +5,13 @@
             margin: 0 2px;
         }
 
-        #myTable_filter,
-        #myTable_length {
+        #tablePasar_filter,
+        #tablePasar_length {
             margin-bottom: 12px;
         }
 
-        #myTable th,
-        #myTable td {
+        #tablePasar th,
+        #tablePasar td {
             vertical-align: middle;
         }
 
@@ -19,12 +19,12 @@
             min-height: 260px;
         }
 
-        #myTable .dropdown {
+        #tablePasar .dropdown {
             position: relative;
             display: inline-block;
         }
 
-        #myTable .dropdown-menu {
+        #tablePasar .dropdown-menu {
             position: absolute;
             top: 100%;
             left: 0;
@@ -36,15 +36,15 @@
 @push('js-stack')
     <script>
         function initPasarTable() {
-            var tableEl = document.getElementById('myTable');
+            var tableEl = document.getElementById('tablePasar');
             if (!tableEl) return;
 
-            if ($.fn.DataTable && $.fn.DataTable.isDataTable('#myTable')) {
-                $('#myTable').DataTable().destroy();
+            if ($.fn.DataTable && $.fn.DataTable.isDataTable('#tablePasar')) {
+                $('#tablePasar').DataTable().destroy();
             }
 
             if ($.fn.DataTable) {
-                window.dtTable = $('#myTable').DataTable({
+                window.dtTable = $('#tablePasar').DataTable({
                     processing: true,
                     serverSide: true,
                     responsive: false,

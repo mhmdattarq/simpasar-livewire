@@ -99,10 +99,29 @@ $(document).on('show.bs.modal', function() {
     $('[data-bs-toggle="dropdown"], .dropdown-toggle').attr('aria-expanded', 'false');
 });
 
-// Close all open dropdowns before leaving page in SPA
+$(document).on('shown.bs.modal', function() {
+    // Jika ada lebih dari 1 backdrop akibat spam klik, buang kelebihannya
+    const backdrops = $('.modal-backdrop');
+    if (backdrops.length > 1) {
+        backdrops.not(':last').remove();
+    }
+});
+
+$(document).on('hidden.bs.modal', function() {
+    // Jika tidak ada modal lain yang terbuka, bersihkan semua backdrop
+    if (!$('.modal.show').length) {
+        $('.modal-backdrop').remove();
+        $('body').removeClass('modal-open').css('overflow', '').css('padding-right', '');
+    }
+});
+
+// Close all open dropdowns and modals before leaving page in SPA
 document.addEventListener("livewire:navigating", () => {
     $('.dropdown-menu.show').removeClass('show');
     $('.dropdown-toggle').attr('aria-expanded', 'false');
+    $('.modal').modal('hide');
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open').css('overflow', '').css('padding-right', '');
 });
 
 // Vertical Menu Active State & Collapse Handling

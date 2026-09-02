@@ -65,6 +65,8 @@ window.addEventListener('closeModal', param => {
             modal.hide();
         }
         $('#' + id).modal('hide');
+        $('.modal-backdrop').remove();
+        $('body').removeClass('modal-open').css('overflow', '').css('padding-right', '');
     }
 });
 

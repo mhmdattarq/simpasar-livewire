@@ -34,7 +34,7 @@
                 </div>
                 <div class="card-body" wire:ignore>
                     <div class="table-responsive">
-                        <table id="myTable" class="table table-bordered table-striped w-100 align-middle">
+                        <table id="tablePasar" class="table table-bordered table-striped w-100 align-middle">
                             <thead>
                                 <tr>
                                     <th style="width: 20px" class="text-center">Check</th>

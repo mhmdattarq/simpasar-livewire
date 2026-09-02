@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('admin/assets/images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('admin/assets/images/logo_kota_dumai.webp') }}">
 
     <!-- App css -->
     <link href="{{ asset('admin/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
@@ -19,6 +19,13 @@
 
     {{-- Custom Page CSS Stack --}}
     @stack('css')
+
+    <style>
+        /* Anti-Stacked Backdrop: Mencegah layar menjadi hitam pekat saat spam buka/tutup modal */
+        .modal-backdrop ~ .modal-backdrop {
+            display: none !important;
+        }
+    </style>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
@@ -65,7 +72,7 @@
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <script src="{{ asset('admin/assets/js/app.js') }}"></script>
     <script src="{{ asset('mine/script.js') }}"></script>
-    
+
     {{-- Page JS Stack --}}
     @stack('js')
     @stack('js-stack')

@@ -25,4 +25,42 @@ class KiosRepo
             return false;
         }
     }
+
+    public static function update($id, $data)
+    {
+        try {
+            $kios = DataKios::findOrFail($id);
+            $kios->update($data);
+
+            return true;
+        } catch (\Exception $e) {
+            Log::error('Update tabel data_kios gagal', ['error' => $e->getMessage()]);
+
+            return false;
+        }
+    }
+
+    public static function delete($id)
+    {
+        try {
+            $kios = DataKios::findOrFail($id);
+            $kios->delete();
+
+            return true;
+        } catch (\Exception $e) {
+            Log::error('Delete data tabel data_kios gagal', ['error' => $e->getMessage()]);
+
+            return false;
+        }
+    }
+
+    public static function getById($id)
+    {
+        return DataKios::findOrFail($id);
+    }
+
+    public static function getDt()
+    {
+        return DataKios::with('pasar');
+    }
 }

@@ -5,13 +5,13 @@
             margin: 0 2px;
         }
 
-        #myTable_filter,
-        #myTable_length {
+        #tableKios_filter,
+        #tableKios_length {
             margin-bottom: 12px;
         }
 
-        #myTable th,
-        #myTable td {
+        #tableKios th,
+        #tableKios td {
             vertical-align: middle;
         }
 
@@ -19,12 +19,12 @@
             min-height: 260px;
         }
 
-        #myTable .dropdown {
+        #tableKios .dropdown {
             position: relative;
             display: inline-block;
         }
 
-        #myTable .dropdown-menu {
+        #tableKios .dropdown-menu {
             position: absolute;
             top: 100%;
             left: 0;
@@ -35,16 +35,16 @@
 
 @push('js-stack')
     <script>
-        function initPasarTable() {
-            var tableEl = document.getElementById('myTable');
+        function initKiosTable() {
+            var tableEl = document.getElementById('tableKios');
             if (!tableEl) return;
 
-            if ($.fn.DataTable && $.fn.DataTable.isDataTable('#myTable')) {
-                $('#myTable').DataTable().destroy();
+            if ($.fn.DataTable && $.fn.DataTable.isDataTable('#tableKios')) {
+                $('#tableKios').DataTable().destroy();
             }
 
             if ($.fn.DataTable) {
-                window.dtTable = $('#myTable').DataTable({
+                window.dtTable = $('#tableKios').DataTable({
                     processing: true,
                     serverSide: true,
                     responsive: false,
@@ -54,7 +54,7 @@
                     order: [
                         [2, 'asc']
                     ],
-                    ajax: '{{ route('admin.pasar.dt') }}',
+                    ajax: '{{ route('admin.kios.dt') }}',
                     columns: [{
                             data: null,
                             name: 'id',
@@ -73,7 +73,7 @@
                             searchable: false,
                             className: 'text-center',
                             render: function(data, type, row) {
-                                let url = "{{ route('admin.pasar.edit', ':id') }}";
+                                let url = "{{ route('admin.kios.edit', ':id') }}";
                                 let editUrl = url.replace(':id', row.id);
 
                                 return `
@@ -85,7 +85,7 @@
                                             <a class="dropdown-item" href="${editUrl}" wire:navigate>
                                                 <i class="iconoir-edit-pencil me-2 text-warning"></i> Edit
                                             </a>
-                                            <a class="dropdown-item text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#modalDelete" wire:click="hookModalDelete(${data.id},'${data.nama_pasar}')">
+                                            <a class="dropdown-item text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#modalDelete" wire:click="hookModalDelete(${data.id},'${data.nomor_kios}')">
                                                 <i class="iconoir-trash me-2"></i> Hapus
                                             </a>
                                         </div>
@@ -103,37 +103,72 @@
                             }
                         },
                         {
-                            data: 'nama_pasar',
-                            name: 'nama_pasar',
+                            data: 'nomor_kios',
+                            name: 'nomor_kios',
                             orderable: true,
                             searchable: true
                         },
                         {
-                            data: 'alamat_pasar',
-                            name: 'alamat_pasar',
+                            data: 'ukuran_kios',
+                            name: 'ukuran_kios',
                             orderable: true,
-                            searchable: true
+                            searchable: true,
+                            render: function(data) {
+                                return data ? data : '-';
+                            }
                         },
                         {
-                            data: 'total_kios',
-                            name: 'total_kios',
+                            data: 'harga_sewa',
+                            name: 'harga_sewa',
                             orderable: true,
                             searchable: false,
-                            className: 'text-center'
+                            className: 'text-center',
+                            render: function(data) {
+                                return data ? 'Rp ' + Number(data).toLocaleString('id-ID') : '-';
+                            }
                         },
                         {
-                            data: 'total_los',
-                            name: 'total_los',
+                            data: 'satuan_retribusi',
+                            name: 'satuan_retribusi',
                             orderable: true,
                             searchable: false,
-                            className: 'text-center'
+                            className: 'text-center text-capitalize'
                         },
                         {
-                            data: 'total_pelataran',
-                            name: 'total_pelataran',
+                            data: 'status_kios',
+                            name: 'status_kios',
                             orderable: true,
                             searchable: false,
-                            className: 'text-center'
+                            className: 'text-center',
+                            render: function(data) {
+                                if (data === 'tersedia') {
+                                    return '<span class="badge bg-success-subtle text-success">Tersedia</span>';
+                                } else if (data === 'terisi') {
+                                    return '<span class="badge bg-danger-subtle text-danger">Terisi</span>';
+                                } else {
+                                    return '<span class="badge bg-warning-subtle text-warning">Pengajuan</span>';
+                                }
+                            }
+                        },
+                        {
+                            data: 'lokasi_kios',
+                            name: 'lokasi_kios',
+                            orderable: true,
+                            searchable: false,
+                            className: 'text-center',
+                            render: function(data) {
+                                return data ? data : '-';
+                            }
+                        },
+                        {
+                            data: 'pasar.nama_pasar',
+                            name: 'pasar.nama_pasar',
+                            orderable: true,
+                            searchable: true,
+                            className: 'text-center',
+                            render: function(data, type, row) {
+                                return row.pasar ? row.pasar.nama_pasar : '-';
+                            }
                         },
                     ],
                     initComplete: function(settings) {
@@ -156,11 +191,11 @@
         }
 
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initPasarTable);
+            document.addEventListener('DOMContentLoaded', initKiosTable);
         } else {
-            initPasarTable();
+            initKiosTable();
         }
 
-        document.addEventListener('livewire:navigated', initPasarTable);
+        document.addEventListener('livewire:navigated', initKiosTable);
     </script>
 @endpush
