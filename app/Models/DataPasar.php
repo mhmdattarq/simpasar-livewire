@@ -19,4 +19,9 @@ class DataPasar extends Model
     {
         return $this->hasMany(DataKios::class, 'pasar_id');
     }
+
+    public function los(): HasMany
+    {
+        return $this->hasMany(DataLos::class, 'pasar_id');
+    }
 }

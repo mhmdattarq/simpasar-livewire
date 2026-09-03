@@ -1,11 +1,15 @@
 <?php
 
 use App\Http\Controllers\KiosController;
+use App\Http\Controllers\LosController;
 use App\Http\Controllers\PasarController;
 use App\Livewire\Admin\DashboardIndex as AdminDashboard;
 use App\Livewire\Admin\Kios\KiosCreate;
 use App\Livewire\Admin\Kios\KiosData;
 use App\Livewire\Admin\Kios\KiosEdit;
+use App\Livewire\Admin\Los\LosCreate;
+use App\Livewire\Admin\Los\LosData;
+use App\Livewire\Admin\Los\LosEdit;
 use App\Livewire\Admin\Pasar\PasarCreate;
 use App\Livewire\Admin\Pasar\PasarData;
 use App\Livewire\Admin\Pasar\PasarEdit;
@@ -41,6 +45,14 @@ Route::middleware('auth')->group(function () {
                 Route::livewire('/data', KiosData::class)->name('data');
                 Route::livewire('/create', KiosCreate::class)->name('create');
                 Route::livewire('/edit/{id}', KiosEdit::class)->name('edit');
+            });
+        });
+        Route::prefix('los')->group(function () {
+            Route::name('los.')->group(function () {
+                Route::get('/datatable', [LosController::class, 'dataDt'])->name('dt');
+                Route::livewire('/data', LosData::class)->name('data');
+                Route::livewire('/create', LosCreate::class)->name('create');
+                Route::livewire('/edit/{id}', LosEdit::class)->name('edit');
             });
         });
     });

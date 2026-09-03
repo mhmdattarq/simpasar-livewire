@@ -55,19 +55,20 @@ new class extends Component {
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('admin.kios.*') ? 'active' : '' }}"
                                     href="{{ route('admin.kios.data') }}" wire:navigate>
-                                    <i class="iconoir-box-iso menu-icon"></i>
+                                    <i class="iconoir-shop-window menu-icon"></i>
                                     <span>Data Kios</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <i class="iconoir-group menu-icon"></i>
+                                <a class="nav-link {{ request()->routeIs('admin.los.*') ? 'active' : '' }}"
+                                    href="{{ route('admin.los.data') }}" wire:navigate>
+                                    <i class="iconoir-table-rows menu-icon"></i>
                                     <span>Data Los</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
-                                    <i class="iconoir-group menu-icon"></i>
+                                    <i class="iconoir-umbrella menu-icon"></i>
                                     <span>Data Pelataran</span>
                                 </a>
                             </li>
@@ -76,7 +77,7 @@ new class extends Component {
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
-                                    <i class="iconoir-group menu-icon"></i>
+                                    <i class="iconoir-clipboard-check menu-icon"></i>
                                     <span>Data Permohonan</span>
                                 </a>
                             </li>

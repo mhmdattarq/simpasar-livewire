@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Livewire\Admin\Kios;
+namespace App\Livewire\Admin\Los;
 
-use App\Repositories\KiosRepo;
+use App\Repositories\LosRepo;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class KiosDelete extends Component
+class LosDelete extends Component
 {
-    #[On('KiosDelete-delete')]
+    #[On('LosDelete-delete')]
     public function delete($data)
     {
-        $process = KiosRepo::delete($data['id']);
+        $process = LosRepo::delete($data['id']);
         if ($process) {
             $this->dispatch('reloadDT', data: 'dtTable');
             $this->dispatch('closeModal', id: 'modalDelete');

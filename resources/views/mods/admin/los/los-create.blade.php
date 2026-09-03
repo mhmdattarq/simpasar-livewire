@@ -3,13 +3,13 @@
     <div class="row mb-2">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0">Edit Data Kios</h4>
+                <h4 class="mb-sm-0">Tambah Data Los</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Master Data Kios</a></li>
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Data Kios</a></li>
-                        <li class="breadcrumb-item active">Edit Data Kios</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Master Data Los</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Data Los</a></li>
+                        <li class="breadcrumb-item active">Tambah Data Los</li>
                     </ol>
                 </div>
 
@@ -20,10 +20,10 @@
         <div class="card-header">
             <div class="row align-items-center">
                 <div class="col-auto">
-                    <h4 class="card-title">Edit Data Kios</h4>
+                    <h4 class="card-title">Tambah Data Los</h4>
                 </div><!--end col-->
                 <div class="col-auto ms-auto">
-                    <a href="{{ route('admin.kios.data') }}" class="btn btn-danger" wire:navigate>Kembali</a>
+                    <a href="{{ route('admin.los.data') }}" class="btn btn-danger" wire:navigate>Kembali</a>
                 </div><!--end col-->
             </div> <!--end row-->
         </div><!--end card-header-->
@@ -32,26 +32,26 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="mb-2 row">
-                            <label for="nomor_kios" class="col-sm-3 col-form-label">Nomor/Kode Kios</label>
+                            <label for="nomor_los" class="col-sm-3 col-form-label">Nomor/Kode Los</label>
                             <div class="col-sm-9">
-                                <input type="text" id="nomor_kios"
-                                    class="form-control @error('form.nomor_kios') is-invalid @enderror"
-                                    placeholder="Masukkan Nomor/Kode Kios" wire:model="form.nomor_kios">
+                                <input type="text" id="nomor_los"
+                                    class="form-control @error('form.nomor_los') is-invalid @enderror"
+                                    placeholder="Masukkan Nomor/Kode Los" wire:model="form.nomor_los">
                                 <div class="invalid-feedback">
-                                    @error('form.nomor_kios')
+                                    @error('form.nomor_los')
                                         {{ $message }}
                                     @enderror
                                 </div>
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label for="ukuran_kios" class="col-sm-3 col-form-label">Ukuran Kios</label>
+                            <label for="ukuran_los" class="col-sm-3 col-form-label">Ukuran Los</label>
                             <div class="col-sm-9">
-                                <input type="text" id="ukuran_kios"
-                                    class="form-control @error('form.ukuran_kios') is-invalid @enderror"
-                                    placeholder="Contoh: 3 x 4 m" wire:model="form.ukuran_kios">
+                                <input type="text" id="ukuran_los"
+                                    class="form-control @error('form.ukuran_los') is-invalid @enderror"
+                                    placeholder="Contoh: 3 x 4 m" wire:model="form.ukuran_los">
                                 <div class="invalid-feedback">
-                                    @error('form.ukuran_kios')
+                                    @error('form.ukuran_los')
                                         {{ $message }}
                                     @enderror
                                 </div>
@@ -91,31 +91,31 @@
                     </div><!--end col-->
                     <div class="col-lg-6">
                         <div class="mb-2 row">
-                            <label for="status_kios" class="col-sm-3 col-form-label">Status Kios</label>
+                            <label for="status_los" class="col-sm-3 col-form-label">Status Los</label>
                             <div class="col-sm-9">
-                                <select id="status_kios"
-                                    class="form-select @error('form.status_kios') is-invalid @enderror"
-                                    wire:model="form.status_kios">
-                                    <option value="">Pilih Status Kios</option>
+                                <select id="status_los"
+                                    class="form-select @error('form.status_los') is-invalid @enderror"
+                                    wire:model="form.status_los">
+                                    <option value="">Pilih Status Los</option>
                                     <option value="tersedia">Tersedia</option>
                                     <option value="terisi">Terisi</option>
                                     <option value="pengajuan">Pengajuan</option>
                                 </select>
                                 <div class="invalid-feedback">
-                                    @error('form.status_kios')
+                                    @error('form.status_los')
                                         {{ $message }}
                                     @enderror
                                 </div>
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label for="lokasi_kios" class="col-sm-3 col-form-label">Lokasi Kios</label>
+                            <label for="lokasi_los" class="col-sm-3 col-form-label">Lokasi Los</label>
                             <div class="col-sm-9">
-                                <input type="text" id="lokasi_kios"
-                                    class="form-control @error('form.lokasi_kios') is-invalid @enderror"
-                                    placeholder="Contoh: Blok A No. 12" wire:model="form.lokasi_kios">
+                                <input type="text" id="lokasi_los"
+                                    class="form-control @error('form.lokasi_los') is-invalid @enderror"
+                                    placeholder="Contoh: Blok A No. 12" wire:model="form.lokasi_los">
                                 <div class="invalid-feedback">
-                                    @error('form.lokasi_kios')
+                                    @error('form.lokasi_los')
                                         {{ $message }}
                                     @enderror
                                 </div>
@@ -140,7 +140,7 @@
                         </div>
                     </div><!--end col-->
                     <div class="mt-2">
-                        <button type="submit" class="btn btn-primary w-100">Simpan Perubahan</button>
+                        <button type="submit" class="btn btn-primary w-100">Simpan</button>
                     </div>
                 </div> <!--end row-->
             </form>

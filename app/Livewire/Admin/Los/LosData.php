@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Livewire\Admin\Kios;
+namespace App\Livewire\Admin\Los;
 
-use App\Repositories\KiosRepo;
+use App\Repositories\LosRepo;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class KiosData extends Component
+class LosData extends Component
 {
     public function hookModalDelete($id, $identity)
     {
@@ -14,24 +14,24 @@ class KiosData extends Component
             'id' => $id,
             'title' => 'Konfirmasi Hapus',
             'msg' => 'Apakah anda yakin menghapus data '.$identity.' ?',
-            'dispatch' => 'KiosData-delete',
+            'dispatch' => 'LosData-delete',
         ];
 
         $this->dispatch('modal-delete-setDeleteId', $dtHook);
     }
 
-    #[On('KiosData-delete')]
+    #[On('LosData-delete')]
     public function delete($data)
     {
         $id = is_array($data) ? ($data['id'] ?? null) : $data;
-        $process = KiosRepo::delete($id);
+        $process = LosRepo::delete($id);
 
         if ($process) {
             $this->dispatch('closeModal', id: 'modalDelete');
             $this->dispatch('alert-show', data: [
                 'type' => 'success',
                 'title' => 'Berhasil',
-                'message' => 'Data Kios Berhasil dihapus.',
+                'message' => 'Data Los Berhasil dihapus.',
             ]);
             $this->dispatch('reloadDT', data: 'dtTable');
         } else {
@@ -45,6 +45,6 @@ class KiosData extends Component
 
     public function render()
     {
-        return view('mods.admin.kios.kios-data');
+        return view('mods.admin.los.los-data');
     }
 }
