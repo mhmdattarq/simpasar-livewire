@@ -63,7 +63,7 @@ class KiosEdit extends Component
     public function rules()
     {
         return [
-            'form.nomor_kios' => 'required|unique:data_kios,nomor_kios,'.$this->id,
+            'form.nomor_kios' => 'required|unique:data_kios,nomor_kios,' . $this->id,
             'form.ukuran_kios' => 'nullable',
             'form.harga_sewa' => 'nullable|numeric',
             'form.satuan_retribusi' => 'required|in:hari,bulan,tahun',
