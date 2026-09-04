@@ -31,11 +31,11 @@ class LosCreate extends Component
     {
         return [
             'form.nomor_los' => 'required|unique:data_los,nomor_los',
-            'form.ukuran_los' => 'nullable',
-            'form.harga_sewa' => 'nullable|numeric',
+            'form.ukuran_los' => 'required',
+            'form.harga_sewa' => 'required|numeric',
             'form.satuan_retribusi' => 'required|in:hari,bulan,tahun',
             'form.status_los' => 'required|in:tersedia,terisi,pengajuan',
-            'form.lokasi_los' => 'nullable',
+            'form.lokasi_los' => 'required',
             'form.pasar_id' => 'required|exists:data_pasars,id',
         ];
     }
@@ -45,12 +45,15 @@ class LosCreate extends Component
         return [
             'form.nomor_los.required' => 'Mohon Masukkan Nomor Los',
             'form.nomor_los.unique' => 'Nomor Los sudah digunakan, gunakan nomor lain',
+            'form.ukuran_los.required' => 'Mohon Masukkan Ukuran Los',
             'form.harga_sewa.numeric' => 'Harga Sewa harus berupa angka',
-            'form.satuan_retribusi.required' => 'Mohon Pilih Satuan Retribusi',
+            'form.harga_sewa.required' => 'Mohon Masukkan Harga Sewa Los',
+            'form.satuan_retribusi.required' => 'Mohon Pilih Satuan Retribusi Los',
             'form.satuan_retribusi.in' => 'Pilihan Satuan Retribusi tidak valid',
             'form.status_los.required' => 'Mohon Pilih Status Los',
             'form.status_los.in' => 'Pilihan Status Los tidak valid',
-            'form.pasar_id.required' => 'Mohon Pilih Pasar',
+            'form.lokasi_los.required' => 'Mohon Masukkan Lokasi Los',
+            'form.pasar_id.required' => 'Mohon Pilih Pasar Untuk Los',
             'form.pasar_id.exists' => 'Pasar yang dipilih tidak valid',
         ];
     }

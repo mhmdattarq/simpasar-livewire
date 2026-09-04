@@ -3,6 +3,7 @@
 use App\Http\Controllers\KiosController;
 use App\Http\Controllers\LosController;
 use App\Http\Controllers\PasarController;
+use App\Http\Controllers\PelataranController;
 use App\Livewire\Admin\DashboardIndex as AdminDashboard;
 use App\Livewire\Admin\Kios\KiosCreate;
 use App\Livewire\Admin\Kios\KiosData;
@@ -13,6 +14,9 @@ use App\Livewire\Admin\Los\LosEdit;
 use App\Livewire\Admin\Pasar\PasarCreate;
 use App\Livewire\Admin\Pasar\PasarData;
 use App\Livewire\Admin\Pasar\PasarEdit;
+use App\Livewire\Admin\Pelataran\PelataranCreate;
+use App\Livewire\Admin\Pelataran\PelataranData;
+use App\Livewire\Admin\Pelataran\PelataranEdit;
 use App\Livewire\Auth\Login;
 use App\Livewire\Pedagang\DashboardIndex as PedagangDashboard;
 use App\Models\User;
@@ -53,6 +57,14 @@ Route::middleware('auth')->group(function () {
                 Route::livewire('/data', LosData::class)->name('data');
                 Route::livewire('/create', LosCreate::class)->name('create');
                 Route::livewire('/edit/{id}', LosEdit::class)->name('edit');
+            });
+        });
+        Route::prefix('pelataran')->group(function () {
+            Route::name('pelataran.')->group(function () {
+                Route::get('/datatable', [PelataranController::class, 'dataDt'])->name('dt');
+                Route::livewire('/data', PelataranData::class)->name('data');
+                Route::livewire('/create', PelataranCreate::class)->name('create');
+                Route::livewire('/edit/{id}', PelataranEdit::class)->name('edit');
             });
         });
     });

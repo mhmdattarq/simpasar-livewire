@@ -3,13 +3,13 @@
     <div class="row mb-2">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0">Tambah Data Kios</h4>
+                <h4 class="mb-sm-0">Edit Data Pelataran</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Master Data Kios</a></li>
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Data Kios</a></li>
-                        <li class="breadcrumb-item active">Tambah Data Kios</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Master Data Pelataran</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Data Pelataran</a></li>
+                        <li class="breadcrumb-item active">Edit Data Pelataran</li>
                     </ol>
                 </div>
 
@@ -20,10 +20,10 @@
         <div class="card-header">
             <div class="row align-items-center">
                 <div class="col-auto">
-                    <h4 class="card-title">Tambah Data Kios</h4>
+                    <h4 class="card-title">Edit Data Pelataran</h4>
                 </div><!--end col-->
                 <div class="col-auto ms-auto">
-                    <a href="{{ route('admin.kios.data') }}" class="btn btn-danger" wire:navigate>Kembali</a>
+                    <a href="{{ route('admin.pelataran.data') }}" class="btn btn-danger" wire:navigate>Kembali</a>
                 </div><!--end col-->
             </div> <!--end row-->
         </div><!--end card-header-->
@@ -32,26 +32,26 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="mb-3 row">
-                            <label for="nomor_kios" class="col-sm-3 col-form-label">Nomor/Kode Kios</label>
+                            <label for="nomor_pelataran" class="col-sm-3 col-form-label">Nomor/Kode Pelataran</label>
                             <div class="col-sm-9">
-                                <input type="text" id="nomor_kios"
-                                    class="form-control @error('form.nomor_kios') is-invalid @enderror"
-                                    placeholder="Masukkan Nomor/Kode Kios" wire:model="form.nomor_kios">
+                                <input type="text" id="nomor_pelataran"
+                                    class="form-control @error('form.nomor_pelataran') is-invalid @enderror"
+                                    placeholder="Masukkan Nomor/Kode Pelataran" wire:model="form.nomor_pelataran">
                                 <div class="invalid-feedback">
-                                    @error('form.nomor_kios')
+                                    @error('form.nomor_pelataran')
                                         {{ $message }}
                                     @enderror
                                 </div>
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="ukuran_kios" class="col-sm-3 col-form-label">Ukuran Kios</label>
+                            <label for="ukuran_pelataran" class="col-sm-3 col-form-label">Ukuran Pelataran</label>
                             <div class="col-sm-9">
-                                <input type="text" id="ukuran_kios"
-                                    class="form-control @error('form.ukuran_kios') is-invalid @enderror"
-                                    placeholder="Contoh: 3 x 4 m" wire:model="form.ukuran_kios">
+                                <input type="text" id="ukuran_pelataran"
+                                    class="form-control @error('form.ukuran_pelataran') is-invalid @enderror"
+                                    placeholder="Contoh: 3 x 4 m" wire:model="form.ukuran_pelataran">
                                 <div class="invalid-feedback">
-                                    @error('form.ukuran_kios')
+                                    @error('form.ukuran_pelataran')
                                         {{ $message }}
                                     @enderror
                                 </div>
@@ -91,31 +91,31 @@
                     </div><!--end col-->
                     <div class="col-lg-6">
                         <div class="mb-3 row">
-                            <label for="status_kios" class="col-sm-3 col-form-label">Status Kios</label>
+                            <label for="status_pelataran" class="col-sm-3 col-form-label">Status Pelataran</label>
                             <div class="col-sm-9">
-                                <select id="status_kios"
-                                    class="form-select @error('form.status_kios') is-invalid @enderror"
-                                    wire:model="form.status_kios">
-                                    <option value="">Pilih Status Kios</option>
-                                    <option value="tersedia">Tersedia</option>
-                                    <option value="terisi">Terisi</option>
-                                    <option value="pengajuan">Pengajuan</option>
+                                <select id="status_pelataran"
+                                    class="form-select @error('form.status_pelataran') is-invalid @enderror"
+                                    wire:model="form.status_pelataran">
+                                    <option value="">Pilih Status Pelataran</option>
+                                    <option value="tetap">Tetap</option>
+                                    <option value="tidaktetap">Tidak Tetap</option>
+                                    <option value="insidentil">Insidentil</option>
                                 </select>
                                 <div class="invalid-feedback">
-                                    @error('form.status_kios')
+                                    @error('form.status_pelataran')
                                         {{ $message }}
                                     @enderror
                                 </div>
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="lokasi_kios" class="col-sm-3 col-form-label">Lokasi Kios</label>
+                            <label for="lokasi_pelataran" class="col-sm-3 col-form-label">Lokasi Pelataran</label>
                             <div class="col-sm-9">
-                                <input type="text" id="lokasi_kios"
-                                    class="form-control @error('form.lokasi_kios') is-invalid @enderror"
-                                    placeholder="Contoh: Blok A No. 12" wire:model="form.lokasi_kios">
+                                <input type="text" id="lokasi_pelataran"
+                                    class="form-control @error('form.lokasi_pelataran') is-invalid @enderror"
+                                    placeholder="Contoh: Blok A No. 12" wire:model="form.lokasi_pelataran">
                                 <div class="invalid-feedback">
-                                    @error('form.lokasi_kios')
+                                    @error('form.lokasi_pelataran')
                                         {{ $message }}
                                     @enderror
                                 </div>
@@ -140,7 +140,7 @@
                         </div>
                     </div><!--end col-->
                     <div class="mt-2">
-                        <button type="submit" class="btn btn-primary w-100">Simpan</button>
+                        <button type="submit" class="btn btn-primary w-100">Simpan Perubahan</button>
                     </div>
                 </div> <!--end row-->
             </form>

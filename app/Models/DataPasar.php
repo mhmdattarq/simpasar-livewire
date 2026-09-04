@@ -20,8 +20,19 @@ class DataPasar extends Model
         return $this->hasMany(DataKios::class, 'pasar_id');
     }
 
+    /**
+     * Relasi ke DataLos (One to Many)
+     */
     public function los(): HasMany
     {
         return $this->hasMany(DataLos::class, 'pasar_id');
+    }
+
+    /**
+     * Relasi ke DataLos (One to Many)
+     */
+    public function pelataran(): HasMany
+    {
+        return $this->hasMany(DataPelataran::class, 'pasar_id');
     }
 }

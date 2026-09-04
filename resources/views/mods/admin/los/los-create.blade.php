@@ -31,7 +31,7 @@
             <form wire:submit="formSubmit">
                 <div class="row">
                     <div class="col-lg-6">
-                        <div class="mb-2 row">
+                        <div class="mb-3 row">
                             <label for="nomor_los" class="col-sm-3 col-form-label">Nomor/Kode Los</label>
                             <div class="col-sm-9">
                                 <input type="text" id="nomor_los"
@@ -44,7 +44,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mb-2 row">
+                        <div class="mb-3 row">
                             <label for="ukuran_los" class="col-sm-3 col-form-label">Ukuran Los</label>
                             <div class="col-sm-9">
                                 <input type="text" id="ukuran_los"
@@ -57,7 +57,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mb-2 row">
+                        <div class="mb-3 row">
                             <label for="harga_sewa" class="col-sm-3 col-form-label">Harga Sewa / Retribusi</label>
                             <div class="col-sm-9">
                                 <input type="number" id="harga_sewa"
@@ -70,7 +70,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mb-2 row">
+                        <div class="mb-3 row">
                             <label for="satuan_retribusi" class="col-sm-3 col-form-label">Satuan Retribusi</label>
                             <div class="col-sm-9">
                                 <select id="satuan_retribusi"
@@ -90,7 +90,7 @@
                         </div>
                     </div><!--end col-->
                     <div class="col-lg-6">
-                        <div class="mb-2 row">
+                        <div class="mb-3 row">
                             <label for="status_los" class="col-sm-3 col-form-label">Status Los</label>
                             <div class="col-sm-9">
                                 <select id="status_los"
@@ -108,7 +108,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mb-2 row">
+                        <div class="mb-3 row">
                             <label for="lokasi_los" class="col-sm-3 col-form-label">Lokasi Los</label>
                             <div class="col-sm-9">
                                 <input type="text" id="lokasi_los"
@@ -121,7 +121,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mb-2 row">
+                        <div class="mb-3 row">
                             <label for="pasar_id" class="col-sm-3 col-form-label">Pasar</label>
                             <div class="col-sm-9">
                                 <select id="pasar_id" class="form-select @error('form.pasar_id') is-invalid @enderror"

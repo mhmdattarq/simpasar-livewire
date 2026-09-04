@@ -31,11 +31,11 @@ class KiosCreate extends Component
     {
         return [
             'form.nomor_kios' => 'required|unique:data_kios,nomor_kios',
-            'form.ukuran_kios' => 'required|nullable',
-            'form.harga_sewa' => 'required|nullable|numeric',
+            'form.ukuran_kios' => 'required',
+            'form.harga_sewa' => 'required|numeric',
             'form.satuan_retribusi' => 'required|in:hari,bulan,tahun',
             'form.status_kios' => 'required|in:tersedia,terisi,pengajuan',
-            'form.lokasi_kios' => 'required|nullable',
+            'form.lokasi_kios' => 'required',
             'form.pasar_id' => 'required|exists:data_pasars,id',
         ];
     }
@@ -48,12 +48,12 @@ class KiosCreate extends Component
             'form.ukuran_kios.required' => 'Mohon Masukkan Ukuran Kios',
             'form.harga_sewa.required' => 'Mohon Masukkan Harga Sewa Kios',
             'form.harga_sewa.numeric' => 'Harga Sewa harus berupa angka',
-            'form.satuan_retribusi.required' => 'Mohon Pilih Satuan Retribusi',
+            'form.satuan_retribusi.required' => 'Mohon Pilih Satuan Retribusi Kios',
             'form.satuan_retribusi.in' => 'Pilihan Satuan Retribusi tidak valid',
             'form.status_kios.required' => 'Mohon Pilih Status Kios',
             'form.status_kios.in' => 'Pilihan Status Kios tidak valid',
             'form.lokasi_kios.required' => 'Mohon Masukkan Lokasi Kios',
-            'form.pasar_id.required' => 'Mohon Pilih Pasar',
+            'form.pasar_id.required' => 'Mohon Pilih Pasar Untuk Kios',
             'form.pasar_id.exists' => 'Pasar yang dipilih tidak valid',
         ];
     }

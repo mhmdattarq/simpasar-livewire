@@ -67,7 +67,8 @@ new class extends Component {
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link {{ request()->routeIs('admin.pelataran.*') ? 'active' : '' }}"
+                                    href="{{ route('admin.pelataran.data') }}" wire:navigate>
                                     <i class="iconoir-umbrella menu-icon"></i>
                                     <span>Data Pelataran</span>
                                 </a>
