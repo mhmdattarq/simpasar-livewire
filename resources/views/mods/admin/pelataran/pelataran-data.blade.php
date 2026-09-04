@@ -76,6 +76,6 @@
             </div>
         </div>
     </div>
-    <livewire:modal-delete />
+    <livewire:modal />
     @include('mods.admin.pelataran.atc.pelataran-data-atc')
 </div>

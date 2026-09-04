@@ -87,28 +87,51 @@ new class extends Component {
                         {{-- MENU ROLE PEDAGANG --}}
                         @if (auth()->user()?->isPedagang())
                             <li class="menu-label pt-0 mt-0">
-                                <span>Menu Pedagang</span>
+                                <span>Menu Utama</span>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('pedagang.dashboard') ? 'active' : '' }}"
                                     href="{{ route('pedagang.dashboard') }}" wire:navigate>
                                     <i class="iconoir-home-simple menu-icon"></i>
-                                    <span>Dashboard Pedagang</span>
+                                    <span>Dashboard</span>
                                 </a>
                             </li>
                             <li class="menu-label mt-2">
-                                <span>Layanan Pedagang</span>
+                                <span>Layanan Permohonan</span>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <i class="iconoir-shop menu-icon"></i>
-                                    <span>Kios / Lapak Saya</span>
+                                <a class="nav-link {{ request()->routeIs('pedagang.permohonan.ajukan') || request()->routeIs('pedagang.ajukan_permohonan.*') ? 'active' : '' }}"
+                                    href="{{ Route::has('pedagang.permohonan.ajukan') ? route('pedagang.permohonan.ajukan') : (Route::has('pedagang.ajukan_permohonan.create') ? route('pedagang.ajukan_permohonan.create') : '#') }}"
+                                    wire:navigate>
+                                    <i class="iconoir-clipboard-check menu-icon"></i>
+                                    <span>Ajukan Pemohonan</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <i class="iconoir-credit-card menu-icon"></i>
-                                    <span>Riwayat Retribusi</span>
+                                <a class="nav-link {{ request()->routeIs('pedagang.permohonan.unggah') ? 'active' : '' }}"
+                                    href="{{ Route::has('pedagang.permohonan.unggah') ? route('pedagang.permohonan.unggah') : '#' }}"
+                                    wire:navigate>
+                                    <i class="iconoir-upload-square menu-icon"></i>
+                                    <span>Unggah Surat Pemohonan</span>
+                                </a>
+                            </li>
+                            <li class="menu-label mt-2">
+                                <span>Informasi & Riwayat</span>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('pedagang.pengumuman.*') ? 'active' : '' }}"
+                                    href="{{ Route::has('pedagang.pengumuman.index') ? route('pedagang.pengumuman.index') : '#' }}"
+                                    wire:navigate>
+                                    <i class="iconoir-megaphone menu-icon"></i>
+                                    <span>Pengumuman</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('pedagang.riwayat.*') ? 'active' : '' }}"
+                                    href="{{ Route::has('pedagang.riwayat.index') ? route('pedagang.riwayat.index') : '#' }}"
+                                    wire:navigate>
+                                    <i class="iconoir-journal-page menu-icon"></i>
+                                    <span>Riwayat Surat Pemohonan</span>
                                 </a>
                             </li>
                         @endif

@@ -18,15 +18,18 @@ use App\Livewire\Admin\Pelataran\PelataranCreate;
 use App\Livewire\Admin\Pelataran\PelataranData;
 use App\Livewire\Admin\Pelataran\PelataranEdit;
 use App\Livewire\Auth\Login;
+use App\Livewire\Auth\Register;
+use App\Livewire\Pedagang\AjukanPermohonan\AjukanPermohonanCreate;
 use App\Livewire\Pedagang\DashboardIndex as PedagangDashboard;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// 1. Halaman Login (Hanya untuk Tamu / Pengguna yang BELUM Login)
+// 1. Halaman Login & Register (Hanya untuk Tamu / Pengguna yang BELUM Login)
 Route::middleware('guest')->group(function () {
     Route::livewire('/login', Login::class)->name('login');
+    Route::livewire('/register', Register::class)->name('register');
 });
 
 // 2. Halaman yang Membutuhkan Login (Auth)
@@ -72,6 +75,16 @@ Route::middleware('auth')->group(function () {
     // Group Khusus Role PEDAGANG
     Route::middleware('role:pedagang')->prefix('pedagang')->name('pedagang.')->group(function () {
         Route::livewire('/dashboard', PedagangDashboard::class)->name('dashboard');
+        Route::prefix('ajukan_permohonan')->group(function () {
+            Route::name('ajukan_permohonan.')->group(function () {
+                Route::livewire('/create', AjukanPermohonanCreate::class)->name('create');
+            });
+        });
+        Route::prefix('permohonan')->group(function () {
+            Route::name('permohonan.')->group(function () {
+                Route::livewire('/ajukan', AjukanPermohonanCreate::class)->name('ajukan');
+            });
+        });
     });
 
     // Logout Route

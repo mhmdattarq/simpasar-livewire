@@ -76,7 +76,7 @@
             </div>
         </div>
     </div>
-    <livewire:modal-delete />
+    <livewire:modal />
     {{-- ini ngehook ke dalam atc agar kebaca script datatables nya --}}
     @include('mods.admin.pasar.atc.pasar-data-atc')
 </div>

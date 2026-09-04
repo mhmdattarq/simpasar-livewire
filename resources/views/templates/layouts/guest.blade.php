@@ -26,11 +26,11 @@
 
 <body>
     <div class="container-xxl">
-        <div class="row vh-100 d-flex justify-content-center">
+        <div class="row min-vh-100 d-flex justify-content-center py-4">
             <div class="col-12 align-self-center">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-4 mx-auto">
+                        <div class="col-12">
                             {{ $slot }}
                         </div><!--end col-->
                     </div><!--end row-->
