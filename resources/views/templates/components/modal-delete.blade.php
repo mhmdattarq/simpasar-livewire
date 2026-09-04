@@ -42,7 +42,7 @@ new class extends Component {
                 </div><!--end modal-body-->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-danger btn-sm" wire:click="process({{ $data['id'] ?? 0 }})">Hapus</button>
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal" wire:click="process({{ $data['id'] ?? 0 }})">Hapus</button>
                 </div><!--end modal-footer-->
             </div><!--end modal-content-->
         </div><!--end modal-dialog-->

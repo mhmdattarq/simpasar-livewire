@@ -67,6 +67,10 @@ window.addEventListener('closeModal', param => {
         $('#' + id).modal('hide');
         $('.modal-backdrop').remove();
         $('body').removeClass('modal-open').css('overflow', '').css('padding-right', '');
+        setTimeout(() => {
+            $('.modal-backdrop').remove();
+            $('body').removeClass('modal-open').css('overflow', '').css('padding-right', '');
+        }, 350);
     }
 });
 
@@ -87,13 +91,21 @@ window.addEventListener('reloadDT', param => {
     try {
         if (window[dtName]) {
             window[dtName].ajax.reload(null, false);
+            setTimeout(() => {
+                if (window[dtName] && window[dtName].columns) {
+                    window[dtName].columns.adjust();
+                }
+            }, 150);
         } else {
             eval(dtName).ajax.reload(null, false);
         }
     } catch(e) {
-        if ($.fn.DataTable && $.fn.DataTable.isDataTable('#myTable')) {
-            $('#myTable').DataTable().ajax.reload(null, false);
-        }
+        $('.table.dataTable').each(function() {
+            if ($.fn.DataTable.isDataTable(this)) {
+                $(this).DataTable().ajax.reload(null, false);
+                $(this).DataTable().columns.adjust();
+            }
+        });
     }
 });
 

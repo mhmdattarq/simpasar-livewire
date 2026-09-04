@@ -19,6 +19,10 @@
             min-height: 260px;
         }
 
+        #tableLos {
+            width: 100% !important;
+        }
+
         #tableLos .dropdown {
             position: relative;
             display: inline-block;
@@ -49,6 +53,7 @@
                     serverSide: true,
                     responsive: false,
                     scrollX: false,
+                    autoWidth: false,
                     pageLength: 25,
                     dom: 'lrtip',
                     order: [

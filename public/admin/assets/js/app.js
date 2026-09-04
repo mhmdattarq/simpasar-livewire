@@ -108,11 +108,8 @@ $(document).on('shown.bs.modal', function() {
 });
 
 $(document).on('hidden.bs.modal', function() {
-    // Jika tidak ada modal lain yang terbuka, bersihkan semua backdrop
-    if (!$('.modal.show').length) {
-        $('.modal-backdrop').remove();
-        $('body').removeClass('modal-open').css('overflow', '').css('padding-right', '');
-    }
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open').css({ overflow: '', paddingRight: '' });
 });
 
 // Close all open dropdowns and modals before leaving page in SPA
