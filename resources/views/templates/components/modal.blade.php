@@ -5,7 +5,14 @@ use Livewire\Component;
 
 new class extends Component
 {
+    public $modalId = 'modalDelete';
+
     public $data = [];
+
+    public function mount($modalId = 'modalDelete')
+    {
+        $this->modalId = $modalId;
+    }
 
     #[On('modal-delete-setDeleteId')]
     public function setDeleteId($data)
@@ -17,6 +24,8 @@ new class extends Component
     public function setModalData($data)
     {
         $this->data = is_array($data) && isset($data['data']) ? $data['data'] : $data;
+        $targetId = $this->data['modalId'] ?? $this->modalId;
+        $this->dispatch('showModal', id: $targetId);
     }
 
     public function process($id = null)
@@ -31,7 +40,7 @@ new class extends Component
 ?>
 
 <div>
-    <div class="modal fade" id="{{ $data['modalId'] ?? 'modalDelete' }}" tabindex="-1" role="dialog"
+    <div class="modal fade" id="{{ $data['modalId'] ?? $modalId }}" tabindex="-1" role="dialog"
         aria-labelledby="universalModalTitle" aria-hidden="true" wire:ignore.self>
         <div class="modal-dialog {{ $data['size'] ?? 'modal-dialog-centered' }}" role="document">
             <div class="modal-content">

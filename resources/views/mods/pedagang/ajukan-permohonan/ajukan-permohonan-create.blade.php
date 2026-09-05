@@ -350,5 +350,5 @@
         </div>
     </div>
     {{-- Universal Modal Component for Preview & Confirmation --}}
-    <livewire:modal />
+    <livewire:modal modal-id="modalPreviewPermohonan" />
 </div>
