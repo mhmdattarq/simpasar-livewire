@@ -21,6 +21,8 @@ use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
 use App\Livewire\Pedagang\AjukanPermohonan\AjukanPermohonanCreate;
 use App\Livewire\Pedagang\DashboardIndex as PedagangDashboard;
+use App\Livewire\Pedagang\UnggahPermohonan\UnggahPermohonanCreate;
+use App\Livewire\Pedagang\UnggahPermohonan\UnggahPermohonanData;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -80,10 +82,13 @@ Route::middleware('auth')->group(function () {
                 Route::livewire('/create', AjukanPermohonanCreate::class)->name('create');
             });
         });
-        Route::prefix('permohonan')->group(function () {
-            Route::name('permohonan.')->group(function () {
-                Route::livewire('/ajukan', AjukanPermohonanCreate::class)->name('ajukan');
-            });
+        Route::prefix('permohonan')->name('permohonan.')->group(function () {
+            Route::livewire('/ajukan', AjukanPermohonanCreate::class)->name('ajukan');
+            Route::livewire('/unggah', UnggahPermohonanData::class)->name('unggah');
+        });
+        Route::prefix('unggah_permohonan')->name('unggah_permohonan.')->group(function () {
+            Route::livewire('/data', UnggahPermohonanData::class)->name('data');
+            Route::livewire('/create/{id?}', UnggahPermohonanCreate::class)->name('create');
         });
     });
 

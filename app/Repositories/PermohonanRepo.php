@@ -76,4 +76,23 @@ class PermohonanRepo
             ->orderBy('created_at', 'desc')
             ->get();
     }
+
+    public static function uploadSignedDocument(int $id, string $filePath): bool
+    {
+        try {
+            $permohonan = DataPermohonan::findOrFail($id);
+
+            return $permohonan->update([
+                'dokumen_path' => $filePath,
+                'status' => 'lengkap',
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Upload surat permohonan bertandatangan gagal', [
+                'id' => $id,
+                'error' => $e->getMessage(),
+            ]);
+
+            return false;
+        }
+    }
 }
