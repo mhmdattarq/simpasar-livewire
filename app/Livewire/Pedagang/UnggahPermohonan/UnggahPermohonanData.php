@@ -46,7 +46,11 @@ class UnggahPermohonanData extends Component
                 'isLengkap' => ($permohonan->status === 'lengkap' || $permohonan->status === 'disetujui' || $permohonan->status === 'selesai'),
             ],
             'btnCancelText' => 'Tutup',
-            'showActionBtn' => false,
+            'showActionBtn' => true,
+            'btnActionText' => 'Download PDF',
+            'btnActionClass' => 'btn-primary',
+            'btnActionIcon' => 'iconoir-download',
+            'btnActionUrl' => route('pedagang.permohonan.download', $permohonan->id),
         ]);
     }
 

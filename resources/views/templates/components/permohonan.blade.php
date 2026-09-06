@@ -173,8 +173,8 @@
                 <td>Jam Operasional</td>
                 <td>:</td>
                 <td>
-                    {{ $p->jam_buka ? \Carbon\Carbon::parse($p->jam_buka)->format('H:i') : '........' }} s.d.
-                    {{ $p->jam_tutup ? \Carbon\Carbon::parse($p->jam_tutup)->format('H:i') : '........' }} WIB
+                    {{ !empty($p->jam_buka) ? \Carbon\Carbon::parse($p->jam_buka)->format('H:i') : '........' }} s.d.
+                    {{ !empty($p->jam_tutup) ? \Carbon\Carbon::parse($p->jam_tutup)->format('H:i') : '........' }} WIB
                 </td>
             </tr>
         </table>

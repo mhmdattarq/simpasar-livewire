@@ -94,7 +94,11 @@ class UnggahPermohonanCreate extends Component
                 'isLengkap' => ($this->permohonan->status === 'lengkap'),
             ],
             'btnCancelText' => 'Tutup',
-            'showActionBtn' => false,
+            'showActionBtn' => true,
+            'btnActionText' => 'Download PDF',
+            'btnActionClass' => 'btn-primary',
+            'btnActionIcon' => 'iconoir-download',
+            'btnActionUrl' => route('pedagang.permohonan.download', $this->permohonan->id),
         ]);
     }
 

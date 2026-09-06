@@ -4,6 +4,7 @@ use App\Http\Controllers\KiosController;
 use App\Http\Controllers\LosController;
 use App\Http\Controllers\PasarController;
 use App\Http\Controllers\PelataranController;
+use App\Http\Controllers\PermohonanController;
 use App\Livewire\Admin\DashboardIndex as AdminDashboard;
 use App\Livewire\Admin\Kios\KiosCreate;
 use App\Livewire\Admin\Kios\KiosData;
@@ -85,6 +86,8 @@ Route::middleware('auth')->group(function () {
         Route::prefix('permohonan')->name('permohonan.')->group(function () {
             Route::livewire('/ajukan', AjukanPermohonanCreate::class)->name('ajukan');
             Route::livewire('/unggah', UnggahPermohonanData::class)->name('unggah');
+            Route::get('/download-draft/{id}', [PermohonanController::class, 'downloadDraft'])->name('download-draft');
+            Route::get('/download/{id}', [PermohonanController::class, 'downloadDraft'])->name('download');
         });
         Route::prefix('unggah_permohonan')->name('unggah_permohonan.')->group(function () {
             Route::livewire('/data', UnggahPermohonanData::class)->name('data');

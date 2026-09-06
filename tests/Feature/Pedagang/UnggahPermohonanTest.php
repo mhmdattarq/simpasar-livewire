@@ -105,7 +105,7 @@ test('pedagang dapat mengakses halaman data unggah permohonan dan melihat pengaj
         ->assertSee('Belum Lengkap');
 });
 
-test('pedagang dapat memicu modal pratinjau draf surat pada halaman data permohonan', function () {
+test('pedagang dapat memicu modal pratinjau draf surat pada halaman data permohonan lengkap dengan tombol download', function () {
     Livewire::actingAs($this->pedagangUser)
         ->test(UnggahPermohonanData::class)
         ->call('previewSurat', $this->permohonan->id)
@@ -114,7 +114,9 @@ test('pedagang dapat memicu modal pratinjau draf surat pada halaman data permoho
 
             return $data['modalId'] === 'modalPreviewDraft'
                 && $data['btnCancelText'] === 'Tutup'
-                && ($data['showActionBtn'] ?? null) === false;
+                && ($data['showActionBtn'] ?? null) === true
+                && ($data['btnActionText'] ?? null) === 'Download PDF'
+                && ($data['btnActionUrl'] ?? null) === route('pedagang.permohonan.download', $this->permohonan->id);
         });
 });
 
@@ -158,4 +160,25 @@ test('pedagang dapat mengunggah berkas bertandatangan dan status permohonan beru
     expect($this->permohonan->status)->toBe('lengkap');
     expect($this->permohonan->dokumen_path)->not->toBeNull();
     Storage::disk('public')->assertExists($this->permohonan->dokumen_path);
+});
+
+test('pedagang dapat mengunduh draf surat permohonan dalam format pdf', function () {
+    $response = $this->actingAs($this->pedagangUser)
+        ->get(route('pedagang.permohonan.download', $this->permohonan->id));
+
+    $response->assertSuccessful();
+    $response->assertHeader('Content-Type', 'application/pdf');
+    expect($response->streamedContent())->not->toBeEmpty();
+});
+
+test('pedagang lain tidak dapat mengunduh draf surat permohonan milik orang lain', function () {
+    $otherPedagang = User::factory()->create([
+        'name' => 'Pedagang Lain',
+        'nik' => '1472010101900099',
+        'role' => Role::Pedagang,
+    ]);
+
+    $this->actingAs($otherPedagang)
+        ->get(route('pedagang.permohonan.download', $this->permohonan->id))
+        ->assertNotFound();
 });
