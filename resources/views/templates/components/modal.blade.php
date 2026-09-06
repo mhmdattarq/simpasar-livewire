@@ -81,17 +81,21 @@ new class extends Component
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn {{ $data['btnCancelClass'] ?? 'btn-secondary' }} btn-sm"
-                        data-bs-dismiss="modal">
-                        {{ $data['btnCancelText'] ?? 'Batal' }}
-                    </button>
-                    <button type="button" class="btn {{ $data['btnActionClass'] ?? 'btn-danger' }} btn-sm"
-                        data-bs-dismiss="modal" wire:click="process({{ $data['id'] ?? 0 }})">
-                        @if (isset($data['btnActionIcon']))
-                            <i class="{{ $data['btnActionIcon'] }} me-1"></i>
-                        @endif
-                        {{ $data['btnActionText'] ?? 'Hapus' }}
-                    </button>
+                    @if (!isset($data['showCancelBtn']) || $data['showCancelBtn'] !== false)
+                        <button type="button" class="btn {{ $data['btnCancelClass'] ?? 'btn-secondary' }} btn-sm"
+                            data-bs-dismiss="modal">
+                            {{ $data['btnCancelText'] ?? 'Batal' }}
+                        </button>
+                    @endif
+                    @if ((!isset($data['showActionBtn']) || $data['showActionBtn'] !== false) && (!isset($data['hideActionBtn']) || !$data['hideActionBtn']))
+                        <button type="button" class="btn {{ $data['btnActionClass'] ?? 'btn-danger' }} btn-sm"
+                            data-bs-dismiss="modal" wire:click="process({{ $data['id'] ?? 0 }})">
+                            @if (isset($data['btnActionIcon']))
+                                <i class="{{ $data['btnActionIcon'] }} me-1"></i>
+                            @endif
+                            {{ $data['btnActionText'] ?? 'Hapus' }}
+                        </button>
+                    @endif
                 </div>
             </div>
         </div>

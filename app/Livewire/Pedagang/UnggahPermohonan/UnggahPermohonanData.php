@@ -46,10 +46,7 @@ class UnggahPermohonanData extends Component
                 'isLengkap' => ($permohonan->status === 'lengkap' || $permohonan->status === 'disetujui' || $permohonan->status === 'selesai'),
             ],
             'btnCancelText' => 'Tutup',
-            'btnActionText' => 'Tutup',
-            'btnActionClass' => 'btn-secondary',
-            'btnActionIcon' => 'iconoir-xmark',
-            'dispatch' => 'closePreview',
+            'showActionBtn' => false,
         ]);
     }
 

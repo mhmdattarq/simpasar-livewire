@@ -94,10 +94,7 @@ class UnggahPermohonanCreate extends Component
                 'isLengkap' => ($this->permohonan->status === 'lengkap'),
             ],
             'btnCancelText' => 'Tutup',
-            'btnActionText' => 'Tutup',
-            'btnActionClass' => 'btn-secondary',
-            'btnActionIcon' => 'iconoir-xmark',
-            'dispatch' => 'closePreview',
+            'showActionBtn' => false,
         ]);
     }
 

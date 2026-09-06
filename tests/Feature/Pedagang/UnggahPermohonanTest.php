@@ -109,7 +109,13 @@ test('pedagang dapat memicu modal pratinjau draf surat pada halaman data permoho
     Livewire::actingAs($this->pedagangUser)
         ->test(UnggahPermohonanData::class)
         ->call('previewSurat', $this->permohonan->id)
-        ->assertDispatched('modal-setModalData');
+        ->assertDispatched('modal-setModalData', function ($event, $params) {
+            $data = $params['data'] ?? $params;
+
+            return $data['modalId'] === 'modalPreviewDraft'
+                && $data['btnCancelText'] === 'Tutup'
+                && ($data['showActionBtn'] ?? null) === false;
+        });
 });
 
 test('pedagang dapat membuka halaman form create unggah permohonan', function () {
