@@ -11,7 +11,7 @@
                 {{-- Alert Sukses Setelah Registrasi --}}
                 @if (session('success'))
                     <div class="alert alert-success alert-dismissible fade show mt-2 mb-3" role="alert">
-                        <i class="iconoir-check-circle me-1 align-middle fs-16"></i>
+                        <i class="fas fa-check-circle me-1 align-middle fs-16"></i>
                         {{ session('success') }}
                     </div>
                 @endif
@@ -19,7 +19,7 @@
                 {{-- Alert Error Jika Login Gagal --}}
                 @if ($errorMessage)
                     <div class="alert alert-danger alert-dismissible fade show mt-2 mb-3" role="alert">
-                        <i class="iconoir-warning-circle me-1 align-middle fs-16"></i>
+                        <i class="fas fa-exclamation-circle me-1 align-middle fs-16"></i>
                         {{ $errorMessage }}
                     </div>
                 @endif

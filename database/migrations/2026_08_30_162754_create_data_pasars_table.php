@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('data_pasars', function (Blueprint $table) {
             $table->id();
             $table->string('nama_pasar')->unique();
-            $table->text('alamat_pasar'); 
+            $table->text('alamat_pasar');
             $table->integer('total_kios')->default(0);
             $table->integer('total_los')->default(0);
             $table->integer('total_pelataran')->default(0);

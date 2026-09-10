@@ -27,7 +27,7 @@
                         </div>
                         <div class="col-auto ms-auto">
                             <a href="{{ route('admin.pasar.create') }}" class="btn btn-primary" wire:navigate>
-                                <i class="iconoir-plus-circle me-1"></i> Tambah Data Pasar
+                                <i class="fas fa-plus-circle me-1"></i> Tambah Data Pasar
                             </a>
                         </div>
                     </div>

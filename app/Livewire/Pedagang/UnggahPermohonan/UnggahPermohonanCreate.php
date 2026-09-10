@@ -97,7 +97,7 @@ class UnggahPermohonanCreate extends Component
             'showActionBtn' => true,
             'btnActionText' => 'Download PDF',
             'btnActionClass' => 'btn-primary',
-            'btnActionIcon' => 'iconoir-download',
+            'btnActionIcon' => 'fas fa-download',
             'btnActionUrl' => route('pedagang.permohonan.download', $this->permohonan->id),
         ]);
     }
@@ -129,6 +129,7 @@ class UnggahPermohonanCreate extends Component
             $updated = PermohonanRepo::uploadSignedDocument($this->permohonan_id, $filePath);
 
             if ($updated) {
+                $this->dispatch('permohonan-updated');
                 session()->flash('alert-show', [
                     'type' => 'success',
                     'title' => 'Berhasil Diunggah',

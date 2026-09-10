@@ -3,7 +3,6 @@
 namespace App\Livewire\Admin\Pasar;
 
 use App\Repositories\PasarRepo;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 

@@ -1,13 +1,60 @@
 <?php
 
+use App\Models\DataPermohonan;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 new class extends Component {
-    //
+    #[On('permohonan-created')]
+    #[On('permohonan-updated')]
+    public function refreshNotifications(): void
+    {
+        // Re-render component on permohonan events
+    }
+
+    public function with(): array
+    {
+        if (! auth()->check()) {
+            return [
+                'notifications' => collect(),
+                'notificationsReview' => collect(),
+                'notificationsVerifikasi' => collect(),
+                'unreadCount' => 0,
+            ];
+        }
+
+        if (auth()->user()->isAdmin()) {
+            $notifications = DataPermohonan::with('pasar')
+                ->orderBy('created_at', 'desc')
+                ->take(15)
+                ->get();
+
+            $notificationsReview = $notifications->whereIn('status', ['lengkap', 'draft']);
+            $notificationsVerifikasi = $notifications->where('status', 'verifikasi');
+            $unreadCount = DataPermohonan::whereIn('status', ['draft', 'lengkap', 'verifikasi'])->count();
+        } else {
+            $notifications = DataPermohonan::with('pasar')
+                ->where('user_id', auth()->id())
+                ->orderBy('updated_at', 'desc')
+                ->take(10)
+                ->get();
+
+            $notificationsReview = $notifications->whereIn('status', ['draft', 'lengkap']);
+            $notificationsVerifikasi = $notifications->where('status', 'verifikasi');
+            $unreadCount = $notifications->whereIn('status', ['disetujui', 'ditolak', 'selesai'])->count();
+        }
+
+        return [
+            'notifications' => $notifications,
+            'notificationsReview' => $notificationsReview,
+            'notificationsVerifikasi' => $notificationsVerifikasi,
+            'unreadCount' => $unreadCount,
+        ];
+    }
 };
 ?>
 
-<div>
+<div @if(auth()->check() && auth()->user()->isAdmin()) wire:poll.10s @endif>
     <div class="topbar d-print-none">
         <div class="container-xxl">
             <nav class="topbar-custom d-flex justify-content-between" id="topbar-custom">
@@ -19,215 +66,188 @@ new class extends Component {
                         </button>
                     </li>
                     <li class="mx-3 welcome-text">
-                        <h4 class="mb-0 fw-bold text-truncate">ADMIN CENTER - SIM PASAR</h4>
+                        <h4 class="mb-0 fw-bold text-truncate">
+                            {{ auth()->user()?->isAdmin() ? 'ADMIN CENTER - SIM PASAR' : 'PEDAGANG CENTER - SIM PASAR' }}
+                        </h4>
                     </li>
                 </ul>
                 <ul class="topbar-item list-unstyled d-inline-flex align-items-center mb-0">
                     {{-- NOTIFIKASI DROPDOWN --}}
-                    <li class="dropdown topbar-item position-relative" x-data="{ openNotification: false }"
-                        @click.outside="openNotification = false">
-                        <a class="nav-link dropdown-toggle arrow-none nav-icon" href="javascript:void(0)"
+                    <li class="dropdown topbar-item position-relative" wire:key="header-notification-dropdown"
+                        x-data="{ openNotification: false }" @click.outside="openNotification = false">
+                        <a class="nav-link dropdown-toggle arrow-none nav-icon position-relative" href="javascript:void(0)"
                             @click="openNotification = !openNotification" role="button" aria-haspopup="false">
                             <i class="icofont-bell-alt"></i>
-                            <span class="alert-badge"></span>
+                            @if ($unreadCount > 0)
+                                <span class="position-absolute badge rounded-pill bg-danger"
+                                    style="top: 8px; right: 4px; font-size: 10px; padding: 2px 5px; line-height: 1;">
+                                    {{ $unreadCount > 99 ? '99+' : $unreadCount }}
+                                </span>
+                            @endif
                         </a>
                         <div class="dropdown-menu stop dropdown-menu-end dropdown-lg py-0 shadow border-0"
                             :class="{ 'show': openNotification }"
-                            style="position: absolute; right: 8px; left: auto; top: 86px; z-index: 1060;">
+                            style="position: absolute; right: 8px; left: auto; top: 86px; z-index: 1060; min-width: 320px; width: 360px;">
 
-                            <h5 class="dropdown-item-text m-0 py-3 d-flex justify-content-between align-items-center">
-                                Notifications <a href="#" class="badge text-body-tertiary badge-pill">
-                                    <i class="iconoir-plus-circle fs-4"></i>
-                                </a>
-                            </h5>
-                            <ul class="nav nav-tabs nav-tabs-custom nav-success nav-justified mb-1" role="tablist">
+                            <div class="dropdown-item-text m-0 py-3 d-flex justify-content-between align-items-center border-bottom bg-light">
+                                <h6 class="m-0 fw-bold text-dark fs-14">
+                                    <i class="fas fa-bell text-primary me-1"></i> Notifikasi Permohonan
+                                </h6>
+                                @if ($unreadCount > 0)
+                                    <span class="badge bg-danger rounded-pill fs-11">{{ $unreadCount }} Perlu Tindakan</span>
+                                @else
+                                    <span class="badge bg-success-subtle text-success rounded-pill fs-11">Terkini</span>
+                                @endif
+                            </div>
+
+                            <ul class="nav nav-tabs nav-tabs-custom nav-success nav-justified mb-0" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link mx-0 active" data-bs-toggle="tab" href="#All" role="tab"
+                                    <a class="nav-link mx-0 active py-2 fs-12" data-bs-toggle="tab" href="#NotifAll" role="tab"
                                         aria-selected="true">
-                                        All <span class="badge bg-primary-subtle text-primary badge-pill ms-1">24</span>
+                                        Semua <span class="badge bg-primary-subtle text-primary rounded-pill ms-1">{{ $notifications->count() }}</span>
                                     </a>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link mx-0" data-bs-toggle="tab" href="#Projects" role="tab"
+                                    <a class="nav-link mx-0 py-2 fs-12" data-bs-toggle="tab" href="#NotifReview" role="tab"
                                         aria-selected="false" tabindex="-1">
-                                        Projects
+                                        Review <span class="badge bg-warning-subtle text-warning rounded-pill ms-1">{{ $notificationsReview->count() }}</span>
                                     </a>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link mx-0" data-bs-toggle="tab" href="#Teams" role="tab"
+                                    <a class="nav-link mx-0 py-2 fs-12" data-bs-toggle="tab" href="#NotifVerifikasi" role="tab"
                                         aria-selected="false" tabindex="-1">
-                                        Team
+                                        Verifikasi <span class="badge bg-info-subtle text-info rounded-pill ms-1">{{ $notificationsVerifikasi->count() }}</span>
                                     </a>
                                 </li>
                             </ul>
-                            <div class="ms-0" style="max-height:230px;" data-simplebar>
-                                <div class="tab-content" id="myTabContent">
-                                    <div class="tab-pane fade show active" id="All" role="tabpanel"
-                                        aria-labelledby="all-tab" tabindex="0">
-                                        <!-- item-->
-                                        <a href="#" class="dropdown-item py-3">
-                                            <small class="float-end text-muted ps-2">2 min ago</small>
-                                            <div class="d-flex align-items-center">
-                                                <div
-                                                    class="flex-shrink-0 bg-primary-subtle text-primary thumb-md rounded-circle">
-                                                    <i class="iconoir-wolf fs-4"></i>
-                                                </div>
-                                                <div class="flex-grow-1 ms-2 text-truncate">
-                                                    <h6 class="my-0 fw-normal text-dark fs-13">Your order is placed
-                                                    </h6>
-                                                    <small class="text-muted mb-0">Dummy text of the printing and
-                                                        industry.</small>
-                                                </div><!--end media-body-->
-                                            </div><!--end media-->
-                                        </a><!--end-item-->
-                                        <!-- item-->
 
-                                        <a href="#" class="dropdown-item py-3">
-                                            <small class="float-end text-muted ps-2">10 min ago</small>
-                                            <div class="d-flex align-items-center">
-                                                <div
-                                                    class="flex-shrink-0 bg-primary-subtle text-primary thumb-md rounded-circle">
-                                                    <i class="iconoir-apple-swift fs-4"></i>
+                            <div class="ms-0" style="max-height: 280px; overflow-y: auto;">
+                                <div class="tab-content" id="notificationTabContent">
+                                    <!-- TAB 1: SEMUA -->
+                                    <div class="tab-pane fade show active" id="NotifAll" role="tabpanel" tabindex="0">
+                                        @forelse ($notifications as $item)
+                                            <a href="{{ auth()->user()?->isAdmin() ? route('admin.permohonan.data') : route('pedagang.permohonan.unggah') }}"
+                                                wire:navigate class="dropdown-item py-3 border-bottom text-wrap">
+                                                <small class="float-end text-muted ps-2 fs-11">
+                                                    {{ $item->created_at?->locale('id')->diffForHumans() }}
+                                                </small>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="flex-shrink-0 bg-light thumb-md rounded-circle d-flex align-items-center justify-content-center">
+                                                        @if ($item->status === 'verifikasi')
+                                                            <i class="fas fa-shield-alt fs-5 text-info"></i>
+                                                        @elseif ($item->status === 'lengkap')
+                                                            <i class="fas fa-clipboard-check fs-5 text-warning"></i>
+                                                        @elseif ($item->status === 'disetujui')
+                                                            <i class="fas fa-check-circle fs-5 text-success"></i>
+                                                        @elseif ($item->status === 'ditolak')
+                                                            <i class="fas fa-times-circle fs-5 text-danger"></i>
+                                                        @elseif ($item->status === 'selesai')
+                                                            <i class="fas fa-check-double fs-5 text-success"></i>
+                                                        @else
+                                                            <i class="fas fa-file-alt fs-5 text-primary"></i>
+                                                        @endif
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-2 overflow-hidden">
+                                                        <h6 class="my-0 fw-semibold text-dark fs-13 text-truncate">{{ $item->nama }}</h6>
+                                                        <small class="text-muted mb-0 d-block text-truncate">
+                                                            Pengajuan {{ ucfirst($item->tipe_tempat) }} ({{ $item->nomor_tempat }}) - {{ $item->pasar?->nama_pasar ?? '-' }}
+                                                        </small>
+                                                        <div class="mt-1">
+                                                            @if ($item->status === 'lengkap')
+                                                                <span class="badge bg-warning-subtle text-warning fs-11">Menunggu Review</span>
+                                                            @elseif ($item->status === 'draft')
+                                                                <span class="badge bg-secondary-subtle text-secondary fs-11">Draf Permohonan</span>
+                                                            @elseif ($item->status === 'verifikasi')
+                                                                <span class="badge bg-info-subtle text-info fs-11">Menunggu Verifikasi</span>
+                                                            @elseif ($item->status === 'disetujui')
+                                                                <span class="badge bg-success-subtle text-success fs-11">Disetujui</span>
+                                                            @elseif ($item->status === 'ditolak')
+                                                                <span class="badge bg-danger-subtle text-danger fs-11">Ditolak</span>
+                                                            @elseif ($item->status === 'selesai')
+                                                                <span class="badge bg-success-subtle text-success fs-11">Selesai</span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="flex-grow-1 ms-2 text-truncate">
-                                                    <h6 class="my-0 fw-normal text-dark fs-13">Meeting with designers
-                                                    </h6>
-                                                    <small class="text-muted mb-0">It is a long established fact that a
-                                                        reader.</small>
-                                                </div><!--end media-body-->
-                                            </div><!--end media-->
-                                        </a><!--end-item-->
-                                        <!-- item-->
+                                            </a>
+                                        @empty
+                                            <div class="text-center py-4 text-muted">
+                                                <i class="fas fa-bell-slash fs-2 mb-2 d-block opacity-50"></i>
+                                                <small class="fs-12">Belum ada notifikasi permohonan</small>
+                                            </div>
+                                        @endforelse
+                                    </div>
 
-                                        <a href="#" class="dropdown-item py-3">
-                                            <small class="float-end text-muted ps-2">40 min ago</small>
-                                            <div class="d-flex align-items-center">
-                                                <div
-                                                    class="flex-shrink-0 bg-primary-subtle text-primary thumb-md rounded-circle">
-                                                    <i class="iconoir-birthday-cake fs-4"></i>
+                                    <!-- TAB 2: PERLU REVIEW -->
+                                    <div class="tab-pane fade" id="NotifReview" role="tabpanel" tabindex="0">
+                                        @forelse ($notificationsReview as $item)
+                                            <a href="{{ auth()->user()?->isAdmin() ? route('admin.permohonan.data') : route('pedagang.permohonan.unggah') }}"
+                                                wire:navigate class="dropdown-item py-3 border-bottom text-wrap">
+                                                <small class="float-end text-muted ps-2 fs-11">
+                                                    {{ $item->created_at?->locale('id')->diffForHumans() }}
+                                                </small>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="flex-shrink-0 bg-light thumb-md rounded-circle d-flex align-items-center justify-content-center">
+                                                        <i class="fas fa-clipboard-check fs-5 text-warning"></i>
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-2 overflow-hidden">
+                                                        <h6 class="my-0 fw-semibold text-dark fs-13 text-truncate">{{ $item->nama }}</h6>
+                                                        <small class="text-muted mb-0 d-block text-truncate">
+                                                            Pengajuan {{ ucfirst($item->tipe_tempat) }} ({{ $item->nomor_tempat }}) - {{ $item->pasar?->nama_pasar ?? '-' }}
+                                                        </small>
+                                                        <div class="mt-1">
+                                                            <span class="badge bg-warning-subtle text-warning fs-11">
+                                                                {{ $item->status === 'lengkap' ? 'Menunggu Review' : 'Draf Permohonan' }}
+                                                            </span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="flex-grow-1 ms-2 text-truncate">
-                                                    <h6 class="my-0 fw-normal text-dark fs-13">UX 3 Task complete.</h6>
-                                                    <small class="text-muted mb-0">Dummy text of the printing.</small>
-                                                </div><!--end media-body-->
-                                            </div><!--end media-->
-                                        </a><!--end-item-->
-                                        <!-- item-->
-                                        <a href="#" class="dropdown-item py-3">
-                                            <small class="float-end text-muted ps-2">1 hr ago</small>
-                                            <div class="d-flex align-items-center">
-                                                <div
-                                                    class="flex-shrink-0 bg-primary-subtle text-primary thumb-md rounded-circle">
-                                                    <i class="iconoir-drone fs-4"></i>
-                                                </div>
-                                                <div class="flex-grow-1 ms-2 text-truncate">
-                                                    <h6 class="my-0 fw-normal text-dark fs-13">Your order is placed
-                                                    </h6>
-                                                    <small class="text-muted mb-0">It is a long established fact that a
-                                                        reader.</small>
-                                                </div><!--end media-body-->
-                                            </div><!--end media-->
-                                        </a><!--end-item-->
-                                        <!-- item-->
-                                        <a href="#" class="dropdown-item py-3">
-                                            <small class="float-end text-muted ps-2">2 hrs ago</small>
-                                            <div class="d-flex align-items-center">
-                                                <div
-                                                    class="flex-shrink-0 bg-primary-subtle text-primary thumb-md rounded-circle">
-                                                    <i class="iconoir-user fs-4"></i>
-                                                </div>
-                                                <div class="flex-grow-1 ms-2 text-truncate">
-                                                    <h6 class="my-0 fw-normal text-dark fs-13">Payment Successfull</h6>
-                                                    <small class="text-muted mb-0">Dummy text of the printing.</small>
-                                                </div><!--end media-body-->
-                                            </div><!--end media-->
-                                        </a><!--end-item-->
+                                            </a>
+                                        @empty
+                                            <div class="text-center py-4 text-muted">
+                                                <i class="fas fa-check-circle text-success fs-2 mb-2 d-block opacity-50"></i>
+                                                <small class="fs-12">Tidak ada permohonan yang perlu direview</small>
+                                            </div>
+                                        @endforelse
                                     </div>
-                                    <div class="tab-pane fade" id="Projects" role="tabpanel"
-                                        aria-labelledby="projects-tab" tabindex="0">
-                                        <!-- item-->
-                                        <a href="#" class="dropdown-item py-3">
-                                            <small class="float-end text-muted ps-2">40 min ago</small>
-                                            <div class="d-flex align-items-center">
-                                                <div
-                                                    class="flex-shrink-0 bg-primary-subtle text-primary thumb-md rounded-circle">
-                                                    <i class="iconoir-birthday-cake fs-4"></i>
+
+                                    <!-- TAB 3: VERIFIKASI -->
+                                    <div class="tab-pane fade" id="NotifVerifikasi" role="tabpanel" tabindex="0">
+                                        @forelse ($notificationsVerifikasi as $item)
+                                            <a href="{{ auth()->user()?->isAdmin() ? route('admin.permohonan.data') : route('pedagang.permohonan.unggah') }}"
+                                                wire:navigate class="dropdown-item py-3 border-bottom text-wrap">
+                                                <small class="float-end text-muted ps-2 fs-11">
+                                                    {{ $item->created_at?->locale('id')->diffForHumans() }}
+                                                </small>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="flex-shrink-0 bg-light thumb-md rounded-circle d-flex align-items-center justify-content-center">
+                                                        <i class="fas fa-shield-alt fs-5 text-info"></i>
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-2 overflow-hidden">
+                                                        <h6 class="my-0 fw-semibold text-dark fs-13 text-truncate">{{ $item->nama }}</h6>
+                                                        <small class="text-muted mb-0 d-block text-truncate">
+                                                            Pernyataan {{ ucfirst($item->tipe_tempat) }} ({{ $item->nomor_tempat }}) - {{ $item->pasar?->nama_pasar ?? '-' }}
+                                                        </small>
+                                                        <div class="mt-1">
+                                                            <span class="badge bg-info-subtle text-info fs-11">Menunggu Verifikasi</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="flex-grow-1 ms-2 text-truncate">
-                                                    <h6 class="my-0 fw-normal text-dark fs-13">UX 3 Task complete.</h6>
-                                                    <small class="text-muted mb-0">Dummy text of the printing.</small>
-                                                </div><!--end media-body-->
-                                            </div><!--end media-->
-                                        </a><!--end-item-->
-                                        <!-- item-->
-                                        <a href="#" class="dropdown-item py-3">
-                                            <small class="float-end text-muted ps-2">1 hr ago</small>
-                                            <div class="d-flex align-items-center">
-                                                <div
-                                                    class="flex-shrink-0 bg-primary-subtle text-primary thumb-md rounded-circle">
-                                                    <i class="iconoir-drone fs-4"></i>
-                                                </div>
-                                                <div class="flex-grow-1 ms-2 text-truncate">
-                                                    <h6 class="my-0 fw-normal text-dark fs-13">Your order is placed
-                                                    </h6>
-                                                    <small class="text-muted mb-0">It is a long established fact that a
-                                                        reader.</small>
-                                                </div><!--end media-body-->
-                                            </div><!--end media-->
-                                        </a><!--end-item-->
-                                        <!-- item-->
-                                        <a href="#" class="dropdown-item py-3">
-                                            <small class="float-end text-muted ps-2">2 hrs ago</small>
-                                            <div class="d-flex align-items-center">
-                                                <div
-                                                    class="flex-shrink-0 bg-primary-subtle text-primary thumb-md rounded-circle">
-                                                    <i class="iconoir-user fs-4"></i>
-                                                </div>
-                                                <div class="flex-grow-1 ms-2 text-truncate">
-                                                    <h6 class="my-0 fw-normal text-dark fs-13">Payment Successfull</h6>
-                                                    <small class="text-muted mb-0">Dummy text of the printing.</small>
-                                                </div><!--end media-body-->
-                                            </div><!--end media-->
-                                        </a><!--end-item-->
-                                    </div>
-                                    <div class="tab-pane fade" id="Teams" role="tabpanel"
-                                        aria-labelledby="teams-tab" tabindex="0">
-                                        <!-- item-->
-                                        <a href="#" class="dropdown-item py-3">
-                                            <small class="float-end text-muted ps-2">1 hr ago</small>
-                                            <div class="d-flex align-items-center">
-                                                <div
-                                                    class="flex-shrink-0 bg-primary-subtle text-primary thumb-md rounded-circle">
-                                                    <i class="iconoir-drone fs-4"></i>
-                                                </div>
-                                                <div class="flex-grow-1 ms-2 text-truncate">
-                                                    <h6 class="my-0 fw-normal text-dark fs-13">Your order is placed
-                                                    </h6>
-                                                    <small class="text-muted mb-0">It is a long established fact that a
-                                                        reader.</small>
-                                                </div><!--end media-body-->
-                                            </div><!--end media-->
-                                        </a><!--end-item-->
-                                        <!-- item-->
-                                        <a href="#" class="dropdown-item py-3">
-                                            <small class="float-end text-muted ps-2">2 hrs ago</small>
-                                            <div class="d-flex align-items-center">
-                                                <div
-                                                    class="flex-shrink-0 bg-primary-subtle text-primary thumb-md rounded-circle">
-                                                    <i class="iconoir-user fs-4"></i>
-                                                </div>
-                                                <div class="flex-grow-1 ms-2 text-truncate">
-                                                    <h6 class="my-0 fw-normal text-dark fs-13">Payment Successfull</h6>
-                                                    <small class="text-muted mb-0">Dummy text of the printing.</small>
-                                                </div><!--end media-body-->
-                                            </div><!--end media-->
-                                        </a><!--end-item-->
+                                            </a>
+                                        @empty
+                                            <div class="text-center py-4 text-muted">
+                                                <i class="fas fa-check-circle text-success fs-2 mb-2 d-block opacity-50"></i>
+                                                <small class="fs-12">Tidak ada permohonan yang menunggu verifikasi</small>
+                                            </div>
+                                        @endforelse
                                     </div>
                                 </div>
                             </div>
-                            <!-- All-->
-                            <a href="pages-notifications.html" class="dropdown-item text-center text-dark fs-13 py-2">
-                                View All <i class="fi-arrow-right"></i>
+
+                            <!-- Footer Link -->
+                            <a href="{{ auth()->user()?->isAdmin() ? route('admin.permohonan.data') : route('pedagang.permohonan.unggah') }}"
+                                wire:navigate class="dropdown-item text-center text-primary fw-semibold fs-13 py-2 border-top bg-light">
+                                Lihat Semua Permohonan <i class="fas fa-arrow-right ms-1"></i>
                             </a>
                         </div>
                     </li>
@@ -257,7 +277,7 @@ new class extends Component {
                                     </h6>
                                     <small
                                         class="badge bg-primary-subtle text-primary">{{ auth()->user()?->role?->label() ?? 'Role' }}</small>
-                                </div><!--end media-body-->
+                                </div>
                             </div>
                             <div class="dropdown-divider mt-0"></div>
                             <form method="POST" action="{{ route('logout') }}">
@@ -269,9 +289,8 @@ new class extends Component {
                             </form>
                         </div>
                     </li>
-                </ul><!--end topbar-nav-->
+                </ul>
             </nav>
-            <!-- end navbar-->
         </div>
     </div>
 </div>

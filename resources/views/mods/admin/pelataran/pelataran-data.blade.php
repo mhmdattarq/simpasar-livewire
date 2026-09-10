@@ -27,7 +27,7 @@
                         </div>
                         <div class="col-auto ms-auto">
                             <a href="{{ route('admin.pelataran.create') }}" class="btn btn-primary" wire:navigate>
-                                <i class="iconoir-plus-circle me-1"></i> Tambah Data Pelataran
+                                <i class="fas fa-plus-circle me-1"></i> Tambah Data Pelataran
                             </a>
                         </div>
                     </div>

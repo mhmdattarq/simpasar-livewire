@@ -84,14 +84,14 @@
                                 return `
                                     <div class="dropdown">
                                         <button type="button" class="btn btn-primary dropdown-toggle btn-sm" aria-expanded="false">
-                                            <i class="iconoir-more-horiz"></i>
+                                            <i class="fas fa-ellipsis-h"></i>
                                         </button>
                                         <div class="dropdown-menu shadow">
                                             <a class="dropdown-item" href="${editUrl}" wire:navigate>
-                                                <i class="iconoir-edit-pencil me-2 text-warning"></i> Edit
+                                                <i class="fas fa-pencil-alt me-2 text-warning"></i> Edit
                                             </a>
                                             <a class="dropdown-item text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#modalDelete" wire:click="hookModalDelete(${data.id},'${data.nomor_kios}')">
-                                                <i class="iconoir-trash me-2"></i> Hapus
+                                                <i class="fas fa-trash-alt me-2"></i> Hapus
                                             </a>
                                         </div>
                                     </div>

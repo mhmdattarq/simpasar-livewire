@@ -27,7 +27,7 @@
                         </div>
                         <div class="col-3 align-self-center">
                             <div class="d-flex justify-content-center align-items-center thumb-xl bg-light rounded-circle mx-auto">
-                                <i class="iconoir-shop h1 align-self-center mb-0 text-success"></i>
+                                <i class="fas fa-store fs-1 align-self-center mb-0 text-success"></i>
                             </div>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
                         </div>
                         <div class="col-3 align-self-center">
                             <div class="d-flex justify-content-center align-items-center thumb-xl bg-light rounded-circle mx-auto">
-                                <i class="iconoir-check-circle h1 align-self-center mb-0 text-success"></i>
+                                <i class="fas fa-check-circle fs-1 align-self-center mb-0 text-success"></i>
                             </div>
                         </div>
                     </div>

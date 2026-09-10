@@ -77,7 +77,8 @@ new class extends Component {
                                 <span>Master Data Pedagang</span>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link {{ request()->routeIs('admin.permohonan.*') ? 'active' : '' }}"
+                                    href="{{ route('admin.permohonan.data') }}" wire:navigate>
                                     <i class="iconoir-clipboard-check menu-icon"></i>
                                     <span>Data Permohonan</span>
                                 </a>

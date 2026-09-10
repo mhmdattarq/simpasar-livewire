@@ -65,7 +65,7 @@ new class extends Component
                         {{-- Mode Konfirmasi / Delete Default --}}
                         <div class="row">
                             <div class="col-lg-3 text-center align-self-center">
-                                <i class="{{ $data['icon'] ?? 'iconoir-warning-triangle text-danger' }}"
+                                <i class="{{ $data['icon'] ?? 'fas fa-exclamation-triangle text-danger' }}"
                                     style="font-size: 54px;"></i>
                             </div>
                             <div class="col-lg-9">

@@ -27,7 +27,7 @@
                         </div>
                         <div class="col-auto ms-auto">
                             <a href="{{ route('admin.kios.create') }}" class="btn btn-primary" wire:navigate>
-                                <i class="iconoir-plus-circle me-1"></i> Tambah Data Kios
+                                <i class="fas fa-plus-circle me-1"></i> Tambah Data Kios
                             </a>
                         </div>
                     </div>

@@ -27,7 +27,7 @@
                         </div>
                         <div class="col-auto ms-auto">
                             <a href="{{ route('admin.los.create') }}" class="btn btn-primary" wire:navigate>
-                                <i class="iconoir-plus-circle me-1"></i> Tambah Data Los
+                                <i class="fas fa-plus-circle me-1"></i> Tambah Data Los
                             </a>
                         </div>
                     </div>

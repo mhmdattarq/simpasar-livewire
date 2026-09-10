@@ -17,7 +17,7 @@ new class extends Component {
                             © {{ date('Y') }} SIM Pasar
                             <span class="text-muted d-none d-sm-inline-block float-end">
                                 Crafted with
-                                <i class="iconoir-heart text-danger"></i>
+                                <i class="fas fa-heart text-danger"></i>
                                 by Mannatthemes</span>
                         </p>
                     </div>

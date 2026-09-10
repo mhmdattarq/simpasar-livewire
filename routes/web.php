@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\PermohonanAdminController;
 use App\Http\Controllers\KiosController;
 use App\Http\Controllers\LosController;
 use App\Http\Controllers\PasarController;
@@ -18,6 +19,7 @@ use App\Livewire\Admin\Pasar\PasarEdit;
 use App\Livewire\Admin\Pelataran\PelataranCreate;
 use App\Livewire\Admin\Pelataran\PelataranData;
 use App\Livewire\Admin\Pelataran\PelataranEdit;
+use App\Livewire\Admin\Permohonan\PermohonanData as AdminPermohonanData;
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
 use App\Livewire\Pedagang\AjukanPermohonan\AjukanPermohonanCreate;
@@ -73,6 +75,10 @@ Route::middleware('auth')->group(function () {
                 Route::livewire('/edit/{id}', PelataranEdit::class)->name('edit');
             });
         });
+        Route::prefix('permohonan')->name('permohonan.')->group(function () {
+            Route::get('/datatable', [PermohonanAdminController::class, 'dataDt'])->name('dt');
+            Route::livewire('/data', AdminPermohonanData::class)->name('data');
+        });
     });
 
     // Group Khusus Role PEDAGANG
@@ -88,6 +94,8 @@ Route::middleware('auth')->group(function () {
             Route::livewire('/unggah', UnggahPermohonanData::class)->name('unggah');
             Route::get('/download-draft/{id}', [PermohonanController::class, 'downloadDraft'])->name('download-draft');
             Route::get('/download/{id}', [PermohonanController::class, 'downloadDraft'])->name('download');
+            Route::get('/download-pemberitahuan/{id}', [PermohonanController::class, 'downloadPemberitahuan'])->name('download-pemberitahuan');
+            Route::get('/download-pernyataan/{id}', [PermohonanController::class, 'downloadPernyataan'])->name('download-pernyataan');
         });
         Route::prefix('unggah_permohonan')->name('unggah_permohonan.')->group(function () {
             Route::livewire('/data', UnggahPermohonanData::class)->name('data');

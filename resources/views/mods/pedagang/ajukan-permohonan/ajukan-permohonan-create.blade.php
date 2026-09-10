@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="alert alert-info border-0 shadow-sm d-flex align-items-center p-3 mb-4" role="alert">
-                    <i class="iconoir-info-circle fs-24 me-3 text-info"></i>
+                    <i class="fas fa-info-circle fs-3 me-3 text-info"></i>
                     <div>
                         <h6 class="alert-heading mb-1 fw-bold">Pengajuan Permohonan Sedang Diproses</h6>
                         <p class="mb-0 fs-13">
@@ -45,7 +45,7 @@
                     <div class="d-flex align-items-center">
                         <div
                             class="avatar-sm bg-primary-subtle text-primary rounded-circle d-flex align-items-center justify-content-center me-3">
-                            <i class="iconoir-clipboard-check fs-20"></i>
+                            <i class="fas fa-clipboard-check fs-5"></i>
                         </div>
                         <div>
                             <h5 class="card-title mb-0">Formulir Pengajuan Surat Permohonan</h5>
@@ -60,20 +60,20 @@
                     <div
                         class="alert alert-light border border-primary-subtle bg-primary-subtle bg-opacity-10 p-3 rounded mb-4">
                         <h6 class="text-primary fw-bold mb-2">
-                            <i class="iconoir-warning-triangle me-1"></i> Perhatian Sebelum Mengajukan:
+                            <i class="fas fa-exclamation-triangle me-1"></i> Perhatian Sebelum Mengajukan:
                         </h6>
                         <p class="mb-2 fs-13 text-muted">Pastikan Anda telah menyiapkan dokumen kelengkapan berikut
                             dalam format PDF / Gambar (JPG/PNG, Maks. 5MB per file):</p>
                         <div class="row fs-13 text-secondary g-2">
-                            <div class="col-md-4 col-sm-6"><i class="iconoir-check text-success me-1"></i> Nomor Induk
+                            <div class="col-md-4 col-sm-6"><i class="fas fa-check text-success me-1"></i> Nomor Induk
                                 Berusaha (NIB)</div>
-                            <div class="col-md-4 col-sm-6"><i class="iconoir-check text-success me-1"></i> Fotokopi NPWP
+                            <div class="col-md-4 col-sm-6"><i class="fas fa-check text-success me-1"></i> Fotokopi NPWP
                             </div>
-                            <div class="col-md-4 col-sm-6"><i class="iconoir-check text-success me-1"></i> Fotokopi KTP
+                            <div class="col-md-4 col-sm-6"><i class="fas fa-check text-success me-1"></i> Fotokopi KTP
                             </div>
-                            <div class="col-md-4 col-sm-6"><i class="iconoir-check text-success me-1"></i> Fotokopi
+                            <div class="col-md-4 col-sm-6"><i class="fas fa-check text-success me-1"></i> Fotokopi
                                 Kartu Keluarga (KK)</div>
-                            <div class="col-md-4 col-sm-6"><i class="iconoir-check text-success me-1"></i> Pas Foto
+                            <div class="col-md-4 col-sm-6"><i class="fas fa-check text-success me-1"></i> Pas Foto
                                 Berwarna 3x4</div>
                         </div>
                     </div>
@@ -191,7 +191,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                                 @if (!empty($tipe_tempat) && count($units) === 0)
-                                    <div class="form-text text-warning"><i class="iconoir-info-circle me-1"></i>Tidak
+                                    <div class="form-text text-warning"><i class="fas fa-info-circle me-1"></i>Tidak
                                         ada unit {{ $tipe_tempat }} berstatus 'tersedia' di pasar ini.</div>
                                 @endif
                             </div>
@@ -243,13 +243,15 @@
                             </div>
                         </div>
 
-                        {{-- BAGIAN 3: UNGGAH PERSYARATAN --}}
+                        <hr class="my-4">
+
+                        {{-- BAGIAN 3: UNGGAH DOKUMEN PERSYARATAN --}}
                         <div class="d-flex align-items-center mb-3">
                             <span class="badge bg-primary me-2">3</span>
-                            <h6 class="mb-0 fw-bold text-dark">Unggah Dokumen Persyaratan</h6>
+                            <h6 class="mb-0 fw-bold text-dark">Unggah Berkas Kelengkapan</h6>
                         </div>
 
-                        <div class="row g-3 mb-4">
+                        <div class="row g-3">
                             {{-- NIB --}}
                             <div class="col-md-6">
                                 <label class="form-label fs-13 fw-semibold">1. Berkas NIB (Nomor Induk Berusaha) <span
@@ -262,7 +264,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                                 <div wire:loading wire:target="nib" class="text-primary fs-12 mt-1">
-                                    <i class="iconoir-refresh me-1 spin"></i> Mengunggah berkas NIB...
+                                    <i class="fas fa-spinner fa-spin me-1"></i> Mengunggah berkas NIB...
                                 </div>
                             </div>
 
@@ -278,7 +280,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                                 <div wire:loading wire:target="npwp" class="text-primary fs-12 mt-1">
-                                    <i class="iconoir-refresh me-1 spin"></i> Mengunggah berkas NPWP...
+                                    <i class="fas fa-spinner fa-spin me-1"></i> Mengunggah berkas NPWP...
                                 </div>
                             </div>
 
@@ -294,7 +296,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                                 <div wire:loading wire:target="ktp" class="text-primary fs-12 mt-1">
-                                    <i class="iconoir-refresh me-1 spin"></i> Mengunggah KTP...
+                                    <i class="fas fa-spinner fa-spin me-1"></i> Mengunggah KTP...
                                 </div>
                             </div>
 
@@ -310,7 +312,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                                 <div wire:loading wire:target="kk" class="text-primary fs-12 mt-1">
-                                    <i class="iconoir-refresh me-1 spin"></i> Mengunggah KK...
+                                    <i class="fas fa-spinner fa-spin me-1"></i> Mengunggah KK...
                                 </div>
                             </div>
 
@@ -326,7 +328,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                                 <div wire:loading wire:target="foto" class="text-primary fs-12 mt-1">
-                                    <i class="iconoir-refresh me-1 spin"></i> Mengunggah Pas Foto...
+                                    <i class="fas fa-spinner fa-spin me-1"></i> Mengunggah Pas Foto...
                                 </div>
                             </div>
                         </div>
@@ -337,10 +339,10 @@
                         <div class="d-flex justify-content-end gap-2">
                             <button type="submit" class="btn btn-primary px-4" wire:loading.attr="disabled">
                                 <span wire:loading.remove wire:target="previewSubmit">
-                                    <i class="iconoir-page-search me-1"></i> Buat Permohonan & Preview Surat
+                                    <i class="fas fa-file-invoice me-1"></i> Buat Permohonan & Preview Surat
                                 </span>
                                 <span wire:loading wire:target="previewSubmit">
-                                    <i class="iconoir-refresh me-1 spin"></i> Memeriksa Data...
+                                    <i class="fas fa-spinner fa-spin me-1"></i> Memeriksa Data...
                                 </span>
                             </button>
                         </div>

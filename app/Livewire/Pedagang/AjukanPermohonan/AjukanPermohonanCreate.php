@@ -237,7 +237,7 @@ class AjukanPermohonanCreate extends Component
             'btnCancelText' => 'Kembali',
             'btnActionText' => 'Ajukan Surat',
             'btnActionClass' => 'btn-success',
-            'btnActionIcon' => 'iconoir-send',
+            'btnActionIcon' => 'fas fa-paper-plane',
             'dispatch' => 'AjukanPermohonanCreate-confirm',
         ]);
 
@@ -287,6 +287,7 @@ class AjukanPermohonanCreate extends Component
             $this->dispatch('closeModal', id: 'modalPreviewPermohonan');
 
             if ($permohonan) {
+                $this->dispatch('permohonan-created');
                 session()->flash('alert-show', [
                     'type' => 'success',
                     'title' => 'Permohonan Berhasil Diajukan',

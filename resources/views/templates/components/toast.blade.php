@@ -41,7 +41,7 @@ new class extends Component {
                 x-transition>
                 <div class="d-flex">
                     <div class="toast-body">
-                        <i class="iconoir-check-circle me-1 align-middle fs-16"></i>
+                        <i class="fas fa-check-circle me-1 align-middle fs-16"></i>
                         {{ $msg }}
                     </div>
                     <button type="button" class="btn-close btn-close-white me-2 m-auto"

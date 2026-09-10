@@ -182,3 +182,61 @@ test('pedagang lain tidak dapat mengunduh draf surat permohonan milik orang lain
         ->get(route('pedagang.permohonan.download', $this->permohonan->id))
         ->assertNotFound();
 });
+
+test('pedagang dapat mengunduh surat pemberitahuan dalam format pdf', function () {
+    $this->permohonan->update(['status' => 'disetujui']);
+
+    $response = $this->actingAs($this->pedagangUser)
+        ->get(route('pedagang.permohonan.download-pemberitahuan', $this->permohonan->id));
+
+    $response->assertSuccessful();
+    $response->assertHeader('Content-Type', 'application/pdf');
+    $content = $response->streamedContent();
+    expect($content)->not->toBeEmpty();
+    expect($content)->toContain('/Subtype /Image');
+});
+
+test('surat pemberitahuan menampilkan status ditolak jika permohonan ditolak', function () {
+    $this->permohonan->update([
+        'status' => 'ditolak',
+        'keterangan' => 'Kios sudah penuh',
+    ]);
+
+    $response = $this->actingAs($this->pedagangUser)
+        ->get(route('pedagang.permohonan.download-pemberitahuan', $this->permohonan->id));
+
+    $response->assertSuccessful();
+    $response->assertHeader('Content-Type', 'application/pdf');
+    $content = $response->streamedContent();
+    expect($content)->not->toBeEmpty();
+    expect($content)->toContain('/Subtype /Image');
+});
+
+test('pedagang dapat mengunduh surat pernyataan dalam format pdf', function () {
+    $response = $this->actingAs($this->pedagangUser)
+        ->get(route('pedagang.permohonan.download-pernyataan', $this->permohonan->id));
+
+    $response->assertSuccessful();
+    $response->assertHeader('Content-Type', 'application/pdf');
+    expect($response->streamedContent())->not->toBeEmpty();
+});
+
+test('pedagang dapat mengunggah surat pernyataan fisik dan status permohonan berubah menjadi verifikasi', function () {
+    $this->permohonan->update(['status' => 'disetujui']);
+
+    $file = UploadedFile::fake()->create('surat_pernyataan_bertandatangan.pdf', 600, 'application/pdf');
+
+    Livewire::actingAs($this->pedagangUser)
+        ->test(UnggahPermohonanData::class)
+        ->call('openUploadPernyataanModal', $this->permohonan->id)
+        ->assertDispatched('showModal', id: 'modalUploadPernyataan')
+        ->set('signedPernyataan', $file)
+        ->call('saveUploadPernyataan')
+        ->assertDispatched('closeModal', id: 'modalUploadPernyataan')
+        ->assertDispatched('alert-show');
+
+    $this->permohonan->refresh();
+    expect($this->permohonan->status)->toBe('verifikasi');
+    expect($this->permohonan->dokumen_path_pernyataan)->not->toBeNull();
+    Storage::disk('public')->assertExists($this->permohonan->dokumen_path_pernyataan);
+});

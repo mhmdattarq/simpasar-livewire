@@ -11,7 +11,7 @@
                 {{-- Alert Info Petunjuk Pendaftaran --}}
                 <div class="alert alert-primary mb-3 py-2 px-3 fs-13" role="alert">
                     <div class="d-flex align-items-center mb-1">
-                        <i class="iconoir-info-circle me-2 fs-16 text-primary"></i>
+                        <i class="fas fa-info-circle me-2 fs-16 text-primary"></i>
                         <span class="fw-semibold">Petunjuk Pendaftaran Pedagang:</span>
                     </div>
                     <ul class="mb-0 ps-3 text-muted" style="font-size: 12.5px;">
@@ -24,7 +24,7 @@
                 {{-- Alert Error Umum Jika Registrasi Gagal --}}
                 @if ($errorMessage)
                     <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
-                        <i class="iconoir-warning-circle me-1 align-middle fs-16"></i>
+                        <i class="fas fa-exclamation-circle me-1 align-middle fs-16"></i>
                         {{ $errorMessage }}
                     </div>
                 @endif
@@ -163,7 +163,7 @@
                             <div class="d-grid mt-2">
                                 <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">
                                     <span wire:loading.remove>
-                                        <i class="iconoir-user-badge-check me-1 align-middle fs-16"></i> Daftar Akun Pedagang
+                                        <i class="fas fa-user-check me-1 align-middle fs-16"></i> Daftar Akun Pedagang
                                     </span>
                                     <span wire:loading>
                                         <span class="spinner-border spinner-border-sm me-1" role="status"></span>

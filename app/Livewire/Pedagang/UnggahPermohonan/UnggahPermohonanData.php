@@ -7,11 +7,18 @@ use App\Repositories\PermohonanRepo;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 #[Title('Unggah Surat Permohonan - SIM Pasar')]
 class UnggahPermohonanData extends Component
 {
-    public function previewSurat(int $id)
+    use WithFileUploads;
+
+    public ?int $uploadPernyataanId = null;
+
+    public $signedPernyataan = null;
+
+    public function previewSurat(int $id): void
     {
         $permohonan = DataPermohonan::with('pasar')
             ->where('user_id', Auth::id())
@@ -43,15 +50,54 @@ class UnggahPermohonanData extends Component
             'view' => 'templates.components.permohonan',
             'params' => [
                 'pedagang' => $pedagangData,
-                'isLengkap' => ($permohonan->status === 'lengkap' || $permohonan->status === 'disetujui' || $permohonan->status === 'selesai'),
+                'isLengkap' => ($permohonan->status === 'lengkap' || $permohonan->status === 'disetujui' || $permohonan->status === 'verifikasi' || $permohonan->status === 'selesai'),
             ],
             'btnCancelText' => 'Tutup',
             'showActionBtn' => true,
             'btnActionText' => 'Download PDF',
             'btnActionClass' => 'btn-primary',
-            'btnActionIcon' => 'iconoir-download',
+            'btnActionIcon' => 'fas fa-download',
             'btnActionUrl' => route('pedagang.permohonan.download', $permohonan->id),
         ]);
+    }
+
+    public function openUploadPernyataanModal(int $id): void
+    {
+        $this->uploadPernyataanId = $id;
+        $this->signedPernyataan = null;
+        $this->dispatch('showModal', id: 'modalUploadPernyataan');
+    }
+
+    public function saveUploadPernyataan(): void
+    {
+        $this->validate([
+            'signedPernyataan' => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120',
+        ], [
+            'signedPernyataan.required' => 'Pilih berkas surat pernyataan yang telah Anda tanda tangani.',
+            'signedPernyataan.file' => 'Berkas harus berupa file yang valid.',
+            'signedPernyataan.mimes' => 'Format berkas harus berupa PDF, JPG, JPEG, atau PNG.',
+            'signedPernyataan.max' => 'Ukuran berkas maksimal 5 MB.',
+        ]);
+
+        $filePath = $this->signedPernyataan->store('permohonan/pernyataan', 'public');
+        $success = PermohonanRepo::uploadPernyataan($this->uploadPernyataanId, $filePath);
+
+        if ($success) {
+            $this->dispatch('permohonan-updated');
+            $this->dispatch('closeModal', id: 'modalUploadPernyataan');
+            $this->dispatch('alert-show', data: [
+                'type' => 'success',
+                'title' => 'Surat Pernyataan Berhasil Diunggah',
+                'message' => 'Surat pernyataan Anda telah berhasil dikirim. Silakan menunggu proses verifikasi akhir oleh Admin.',
+            ]);
+            $this->reset(['uploadPernyataanId', 'signedPernyataan']);
+        } else {
+            $this->dispatch('alert-show', data: [
+                'type' => 'danger',
+                'title' => 'Gagal',
+                'message' => 'Terjadi kesalahan saat mengunggah surat pernyataan.',
+            ]);
+        }
     }
 
     public function render()
