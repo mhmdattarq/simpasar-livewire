@@ -74,13 +74,19 @@ new class extends Component {
                                 </a>
                             </li>
                             <li class="menu-label mt-2">
-                                <span>Master Data Pedagang</span>
+                                <span>Master Info Pedagang</span>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('admin.permohonan.*') ? 'active' : '' }}"
                                     href="{{ route('admin.permohonan.data') }}" wire:navigate>
                                     <i class="iconoir-clipboard-check menu-icon"></i>
                                     <span>Data Permohonan</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" wire:navigate>
+                                    <i class="iconoir-clipboard-check menu-icon"></i>
+                                    <span>Data Pengumuman</span>
                                 </a>
                             </li>
                         @endif
