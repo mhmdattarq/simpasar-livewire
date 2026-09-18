@@ -1,7 +1,7 @@
 <div>
     <div class="col-12 col-md-10 col-lg-8 col-xl-7 mx-auto">
-        <div class="card shadow-sm border-0">
-            <div class="card-body p-0 bg-black auth-header-box rounded-top">
+        <div class="card auth-card border-0">
+            <div class="card-body p-0 bg-primary auth-header-box rounded-top">
                 <div class="text-center p-3">
                     <h4 class="mt-2 mb-1 fw-bold text-white fs-20">SIM PASAR</h4>
                     <p class="text-white-50 fw-medium mb-0 fs-13">Pendaftaran Akun Pedagang Baru</p>
@@ -137,8 +137,7 @@
                                 <label for="password_confirmation" class="form-label fs-13">
                                     Konfirmasi Password <span class="text-danger">*</span>
                                 </label>
-                                <input type="password" id="password_confirmation"
-                                    class="form-control"
+                                <input type="password" id="password_confirmation" class="form-control"
                                     placeholder="Ulangi password..." wire:model="password_confirmation">
                             </div>
                         </div>
@@ -149,8 +148,7 @@
                                 <label for="alamat" class="form-label fs-13">
                                     Alamat Lengkap <span class="text-danger">*</span>
                                 </label>
-                                <textarea id="alamat" rows="2"
-                                    class="form-control @error('alamat') is-invalid @enderror"
+                                <textarea id="alamat" rows="2" class="form-control @error('alamat') is-invalid @enderror"
                                     placeholder="Masukkan alamat lengkap sesuai KTP..." wire:model="alamat"></textarea>
                                 @error('alamat')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -178,7 +176,8 @@
                 <div class="text-center mt-3 pt-2 border-top">
                     <p class="text-muted mb-0 fs-13">
                         Sudah memiliki akun?
-                        <a href="{{ route('login') }}" class="text-primary fw-semibold" wire:navigate>Masuk ke Akun</a>
+                        <a href="{{ route('login') }}" class="text-primary fw-semibold" wire:navigate>Masuk ke
+                            Akun</a>
                     </p>
                 </div>
             </div><!--end card-body-->

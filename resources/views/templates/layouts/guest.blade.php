@@ -22,9 +22,25 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @livewireStyles
+
+    <style>
+        body.auth-page {
+            background-image: linear-gradient(rgba(15, 23, 42, 0.45), rgba(15, 23, 42, 0.45)),
+                url('{{ asset('admin/assets/images/foto%20pasar.webp') }}');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        .auth-card {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25), 0 8px 10px -6px rgba(0, 0, 0, 0.15) !important;
+        }
+    </style>
 </head>
 
-<body>
+<body class="auth-page">
     <div class="container-xxl">
         <div class="row min-vh-100 d-flex justify-content-center py-4">
             <div class="col-12 align-self-center">

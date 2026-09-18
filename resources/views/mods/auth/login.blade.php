@@ -1,7 +1,7 @@
 <div>
     <div class="col-md-7 col-lg-5 col-xl-4 mx-auto">
-        <div class="card shadow-sm border-0">
-            <div class="card-body p-0 bg-black auth-header-box rounded-top">
+        <div class="card auth-card border-0">
+            <div class="card-body p-0 bg-primary auth-header-box rounded-top">
                 <div class="text-center p-3">
                     <h4 class="mt-2 mb-1 fw-bold text-white fs-20">SIM PASAR</h4>
                     <p class="text-white-50 fw-medium mb-0 fs-13">Sistem Informasi Manajemen Pasar</p>
@@ -28,8 +28,9 @@
                 <form class="my-3" wire:submit="authenticate">
                     <div class="form-group mb-3">
                         <label class="form-label" for="identifier">Username / NIK</label>
-                        <input type="text" class="form-control @error('identifier') is-invalid @enderror" id="identifier"
-                            wire:model="identifier" placeholder="Admin: username | Pedagang: NIK" autofocus>
+                        <input type="text" class="form-control @error('identifier') is-invalid @enderror"
+                            id="identifier" wire:model="identifier" placeholder="Admin: username | Pedagang: NIK"
+                            autofocus>
                         @error('identifier')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -54,7 +55,8 @@
                         <div class="col-12">
                             <div class="d-grid mt-3">
                                 <button class="btn btn-primary" type="submit" wire:loading.attr="disabled">
-                                    <span wire:loading.remove>Masuk ke Akun <i class="fas fa-sign-in-alt ms-1"></i></span>
+                                    <span wire:loading.remove>Masuk ke Akun <i
+                                            class="fas fa-sign-in-alt ms-1"></i></span>
                                     <span wire:loading>
                                         <span class="spinner-border spinner-border-sm me-1" role="status"></span>
                                         Memproses...
@@ -68,7 +70,8 @@
                 <div class="text-center mt-3">
                     <p class="text-muted mb-0 fs-13">
                         Belum punya akun?
-                        <a href="{{ route('register') }}" class="text-primary fw-semibold" wire:navigate>Daftar Akun Pedagang</a>
+                        <a href="{{ route('register') }}" class="text-primary fw-semibold" wire:navigate>Daftar Akun
+                            Pedagang</a>
                     </p>
                 </div>
             </div><!--end card-body-->

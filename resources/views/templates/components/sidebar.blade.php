@@ -89,6 +89,15 @@ new class extends Component {
                                     <span>Data Pengumuman</span>
                                 </a>
                             </li>
+                            <li class="menu-label mt-2">
+                                <span>Master Kelola konten</span>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" wire:navigate>
+                                    <i class="iconoir-clipboard-check menu-icon"></i>
+                                    <span>Kelola Konten Pasar</span>
+                                </a>
+                            </li>
                         @endif
 
                         {{-- MENU ROLE PEDAGANG --}}
