@@ -22,16 +22,18 @@ use App\Livewire\Admin\Pelataran\PelataranEdit;
 use App\Livewire\Admin\Permohonan\PermohonanData as AdminPermohonanData;
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
+use App\Livewire\Landing\LandingIndex;
 use App\Livewire\Pedagang\AjukanPermohonan\AjukanPermohonanCreate;
 use App\Livewire\Pedagang\DashboardIndex as PedagangDashboard;
 use App\Livewire\Pedagang\UnggahPermohonan\UnggahPermohonanCreate;
 use App\Livewire\Pedagang\UnggahPermohonan\UnggahPermohonanData;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// 1. Halaman Login & Register (Hanya untuk Tamu / Pengguna yang BELUM Login)
+// 1. Landing Page Publik
+Route::livewire('/', LandingIndex::class)->name('landing');
+
+// 2. Halaman Login & Register (Hanya untuk Tamu / Pengguna yang BELUM Login)
 Route::middleware('guest')->group(function () {
     Route::livewire('/login', Login::class)->name('login');
     Route::livewire('/register', Register::class)->name('register');
@@ -111,14 +113,4 @@ Route::middleware('auth')->group(function () {
 
         return redirect()->route('login');
     })->name('logout');
-
-    // Root URL (/) Otomatis Mengarahkan Pengguna Sesuai Role
-    Route::get('/', function (Request $request) {
-        /** @var User $user */
-        $user = $request->user();
-
-        return $user->isAdmin()
-            ? redirect()->route('admin.dashboard')
-            : redirect()->route('pedagang.dashboard');
-    });
 });
